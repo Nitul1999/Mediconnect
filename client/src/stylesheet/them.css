@@ -1,0 +1,26 @@
+:root {
+    --primary: #23486A;
+    --secondary: #F7F7F7;
+    --success: #C890A7;
+    --info: #C890A7;
+    --warning: yellow;
+    --danger: #FB4141;
+    --light: rgb(179, 179, 179);
+    --dark: black;
+}
+
+
+/* .bg-primary {
+    background-color: var(--primary);
+} */
+
+.text-white {
+    color: white !important;
+}
+.text-style{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: var(--secondary) !important; 
+}
+.btn-primary{
+    background-color: var(--primary);
+}

@@ -1,0 +1,53 @@
+.employee-container {
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    color: #1890ff;
+  }
+  
+  .search-bar {
+    width: 70%;
+    margin: 80px auto;
+    display: block;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+    justify-content: center;;
+  }
+  
+  .employee-card {
+    width: 360px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .employee-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .details-modal {
+    width: 60vw !important;
+  }
+  
+  .employee-details {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .timetable-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 10px;
+  }
+  

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Input, Button, Modal, Form, message,Popconfirm } from "antd";
 import "./EmployeeList.css"; // Custom CSS for smooth animations
 import  axiosInstance  from '../../apicalls/index'
+import {jwtDecode} from'jwt-decode'
 
 const EmployeeList = () => {
 
@@ -10,12 +11,18 @@ const EmployeeList = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [timetableForm] = Form.useForm();
-
+  //get user role from token
+  const token = localStorage.getItem('token');
+  const decoded = jwtDecode(token);
+  const userrole = decoded.role;
+  console.log(userrole)
   
   // Fetch employee data
   useEffect(() => {
     fetchEmployees();
   }, []);
+  
+ 
 
   const fetchEmployees = async () => {
     try {
@@ -111,24 +118,29 @@ const EmployeeList = () => {
       {/* Employee Cards */}
       <div className="card-container">
         {filteredEmployees.map((emp) => (
-          <Card key={emp.registrationNo} className="employee-card">
+          <Card key={emp._id} className="employee-card">
             <p><strong>Reg No:</strong> {emp.registrationNo}</p>
             <p><strong>Name:</strong> {emp.name}</p>
-            <p><strong>Type:</strong> {emp.emptype}</p>
+            <p><strong>Type:</strong> {emp.emptype.toUpperCase()}</p>
             <div className="flex justify-spacebtn">
               <Button type="primary" className="btn-primary" onClick={() => viewDetails(emp)}>View Details</Button>
-              <Button type="primary" onClick={() => viewDetails(emp)}>update</Button>
-              <Popconfirm
-                title="Delete Employee!!"
-                description="Are you sure to delete this Employee..?"
-                onConfirm={() => deleteEmployee(emp._id)}
-                onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
-                >
-                    {/* <Button type="primary" onClick={() => deleteEmployee(emp._id)}>Delete</Button> */}
-                      <Button color="danger" variant="solid"> <i class="ri-delete-bin-6-fill"> </i></Button>
-              </Popconfirm>
+              { userrole ==='admin' && ( // this is only for admin
+                <>
+                  <Button type="primary" onClick={() => viewDetails(emp)}>update</Button>
+                    <Popconfirm
+                      title="Delete Employee!!"
+                      description="Are you sure to delete this Employee..?"
+                      onConfirm={() => deleteEmployee(emp._id)}
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                      >
+                          {/* <Button type="primary" onClick={() => deleteEmployee(emp._id)}>Delete</Button> */}
+                        <Button color="danger" variant="solid"> <i class="ri-delete-bin-6-fill"> </i></Button>
+                    </Popconfirm>
+                  </>
+              )}
+             
             </div>
           </Card>
         ))}
@@ -148,8 +160,9 @@ const EmployeeList = () => {
             <h3>{selectedEmployee.name}</h3>
             <p><b>Registration No:</b> {selectedEmployee.registrationNo}</p>
             <p><b>Email:</b> {selectedEmployee.email}</p>
+             <p><b>Contact No:</b> {selectedEmployee.phone}</p>
             <p><b>Specialization:</b> {selectedEmployee.specialization}</p>
-            <p><b>Employee Type:</b> {selectedEmployee.emptype}</p>
+            <p><b>Employee Type:</b> {selectedEmployee.emptype.toUpperCase()}</p>
 
             {/* Timetable Section */}
             <h3>Doctor Timetable</h3>
@@ -166,23 +179,28 @@ const EmployeeList = () => {
             )}
 
             {/* Add Timetable Form */}
-            <Form form={timetableForm} layout="vertical" onFinish={addTimetable}>
-              <h3>Add Timetable</h3>
-              <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
-                <Input placeholder="e.g. Monday" />
-              </Form.Item>
-              <Form.Item name="timing" label="Timing" rules={[{ required: true, message: "Please enter the timing" }]}>
-                <Input placeholder="e.g. 10:00 AM - 4:00 PM" />
-              </Form.Item>
-              <Button type="primary" htmlType="submit">Add Timetable</Button>
-            </Form>
+            {userrole ==='admin' &&  ( // this is only for admin
+              <>
+                <Form form={timetableForm} layout="vertical" onFinish={addTimetable}>
+                  <h3>Add Timetable</h3>
+                  <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
+                    <Input placeholder="e.g. Monday" />
+                  </Form.Item>
+                  <Form.Item name="timing" label="Timing" rules={[{ required: true, message: "Please enter the timing" }]}>
+                    <Input placeholder="e.g. 10:00 AM - 4:00 PM" />
+                  </Form.Item>
+                  <Button type="primary" htmlType="submit">Add Timetable</Button>
+                </Form>
+            
+               </>
+            ) }
+          
           </div>
         )}
       </Modal>
 
     </div>
   );
-
 };
 
 export default EmployeeList;

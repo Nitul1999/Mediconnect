@@ -86,11 +86,18 @@ router.patch("/profile/update/:id", async (req, res) => {
         const { id } = req.params;
         const updatedAdmin = await Admin.findByIdAndUpdate(id, req.body, { new: true });
         if (!updatedAdmin) {
-            return res.status(404).json({ message: "Admin not found" });
+            return res.status(404).json({ 
+                message: "Profile Not found",
+                success:true });
         }
-        res.json({ message: "Admin updated successfully", data: updatedAdmin });
+        res.send({ 
+            message: "Profile Updated successfully",
+            success:true,
+            data: updatedAdmin });
     } catch (error) {
-        res.status(500).json({ message: "Server error", error });
+        res.status(500).json({ 
+            message: "Server error",
+            success:false, });
     }
 });
 
@@ -180,6 +187,7 @@ router.post('/employee/add',async(req,res)=>{
             registrationNo:newemp.registrationNo,
             name:newemp.name,
             email:newemp.email,
+            phone:newemp.phone,
             password:hashedPassword,
             specialization:newemp.specialization,
             emptype:newemp.emptype

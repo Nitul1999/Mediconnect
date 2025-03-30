@@ -5,9 +5,9 @@ const empSchema = new mongoose.Schema({
     email:{type:String},
     password:{type:String},
     phone:{type:Number},
-    address:{type:String},
-    specialization:{type:String},
-    hospitalName:{type:String},
+    address:{type:String,default:" "},
+    specialization:{type:String,default:" "},
+    hospitalName:{type:String,default:" "},
     emptype:{type:String,required:true},// doctor or labtech
     timetable:[{
             day:{type:String},

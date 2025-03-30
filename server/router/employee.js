@@ -70,15 +70,22 @@ router.get("/profile/view/:id", async (req, res) => {
 })
 
 //Update Profile by Emp Id ...working
-router.patch('/update-profile/:id',async(req,res)=>{ //used patch becaused modify specific parts of the profile data
+router.patch('/profile/update/:id',async(req,res)=>{ //used patch becaused modify specific parts of the profile data
     try {
         const {id:_id} = req.params
         const updatedata = req.body
         if(!mongoose.Types.ObjectId.isValid(_id)){
-            return res.status(400).json({message:"Invalid Id"})
+            return res.status(400).json({
+                message:"Profile Not Found",
+                success:true,
+
+            })
         }
         const updateemployee = await employee.findByIdAndUpdate(_id,updatedata,{new:true})
-        res.status(200).json({message:"Profile Update Succssfully", data:updateemployee})
+        res.status(200).json({
+            message:"Profile Update Succssfully",
+            success:true,
+            data:updateemployee})
     } catch (error) {
         res.status(500).json({message:"Internal Server Error"})
     }

@@ -35,7 +35,6 @@ export const Profile = () => {
                     //const response = await axiosInstance.get(`/admin/profile/view/${userid}`)
                     const response = await axiosInstance.get(endpoint[userRole]) // calling the endpoint based on user role
                     setuserprofile(response.data.data)
-                    console.log(response.data.data)
                 } catch (error) {
                     message.error("Failed to fetch user data");
                 }

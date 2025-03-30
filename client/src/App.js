@@ -17,6 +17,7 @@ import { HeaderSecond } from './component/HeaderSecond';
 // import { LoginAddministration } from './pages/common/LoginAddministration';
 import { Login } from './pages/patient/Login';
 import { Profile } from './pages/common/Profile';
+import { Footer } from './component/Footer';
 
 function App() {
 
@@ -37,22 +38,21 @@ function App() {
     return null;
   };
   const userRole = getUserRole() || 'guest'; // Default to 'guest' if no role found
-
-  console.log(userRole);
-
+  
   return (
    <BrowserRouter>
-   <Header/>
-   <HeaderSecond/>
-   <Navbar role={userRole} />
-    <Routes>
-      <Route path='/' element={<Home />} />  
-      {/* <Route path ='/login' element={<LoginAddministration /> }/> */}
-      <Route path='/profile' element={ <Profile />} />
-      <Route path='/sign-in' element ={ <Login />}/>
-      <Route path='/add-employee' element={< Addemployees/> }/>
-      <Route path='/employees' element={<EmployeeList/>}/>
-    </Routes>
+    <Header/>
+    <HeaderSecond/>
+    <Navbar role={userRole} />
+      <Routes>
+        <Route path='/' element={<Home />} />  
+        {/* <Route path ='/login' element={<LoginAddministration /> }/> */}
+        <Route path='/profile' element={ <Profile />} />
+        <Route path='/sign-in' element ={ <Login />}/>
+        <Route path='/add-employee' element={< Addemployees/> }/>
+        <Route path='/employees' element={<EmployeeList/>}/>
+      </Routes>
+      <Footer />
    </BrowserRouter>
   );
 }

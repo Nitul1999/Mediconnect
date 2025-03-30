@@ -5,6 +5,7 @@ const adminSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phone: { type: Number },
     emptype:{type: String},
+    address:{type:String},
     hospitalName: { type: String, required: true }
 },{timestamps:true});
 const Admin = mongoose.model('Admin', adminSchema);

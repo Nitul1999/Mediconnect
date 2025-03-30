@@ -1,27 +1,68 @@
 import React,{ useState }  from 'react'
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { List, Card,Typography,Drawer,Space, Button,Col,Row, Form,Input } from "antd";
+import { useNavigate } from "react-router-dom";
+import  axiosInstance  from '../apicalls/index'
+import { EditOutlined, EllipsisOutlined,LogoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { List, Card,Typography,Drawer,Space, Button,Col,Row, Form,Input, message } from "antd";
 const { Title, Text } = Typography;
+
 
  const ProfileComp = ({data}) => {
       const [open, setOpen] = useState(false);
       const [form] = Form.useForm();
+      const navigate = useNavigate()
       const showDrawer = () => {
-         form.setFieldsValue(data);
-        setOpen(true);
+                                  form.setFieldsValue(data);
+                                  setOpen(true);
       };
       const onClose = () => {
-        setOpen(false);
+                              setOpen(false);
       };
+      const userrole = data.emptype
+      const endpoint ={
+            admin:`/admin/profile/update/${data._id}`,
+            doctor:`/employee/profile/update/${data._id}`,
+            labtech:`/employee/profile/update/${data._id}`
+      }
+      const onFinish = async(values)=>{
+        console.log(values)
+              try {
+                const token = localStorage.getItem('token')
+                if(!token){
+                  message.error('You are not logged in')
+                }
+              
+                if (!endpoint[userrole]) {
+                    message.error('Invalid endpoint');
+                    return; 
+                }
+                const response = await axiosInstance.patch(endpoint[userrole],values)
+                if(response.data.success){
+                    message.success(response.data.message)
+                    window.location.reload()
+
+                }else{
+                    message.error(response.data.message)       
+                }
+
+              } catch (error) {
+                message.error(error.response?.data?.message || "Something went wrong!");
+              }
+      }
+      const logout = async(e)=>{
+        localStorage.removeItem('token')
+        navigate('/')
+        window.location.reload()
+      }
   return (
     <div className=''>
       <div className=''>
-       <Card
+       <Card 
           style={{ width: '30rem' }}
           actions={[
           <SettingOutlined key="setting" />,
           <EditOutlined key="edit" onClick={showDrawer} />,
-          <EllipsisOutlined key="ellipsis" />,
+          // <EllipsisOutlined key="ellipsis" />,
+          <LogoutOutlined key="logout" onClick={logout} />
         ]} >
             <Title level={2}>Profile</Title>
             <div className='p1' style={{width:'100%'}}>
@@ -68,13 +109,13 @@ const { Title, Text } = Typography;
                 extra={
                   <Space>
                     <Button onClick={onClose}>Cancel</Button>
-                    <Button onClick={onClose} type="primary">
+                    <Button onClick={form.submit} type="primary">
                      Update
                     </Button>
                   </Space>
                 }
               >
-            <Form layout="vertical" initialValues={data}>
+            <Form form={form}  layout="vertical" initialValues={data} onFinish={onFinish}>
                 <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
@@ -102,6 +143,7 @@ const { Title, Text } = Typography;
                     <Form.Item
                       name="phone"
                       label="Phone Number"
+                      rules={[{ pattern: /^[0-9]{10}$/, message: "Please enter a valid phone number" }]}
                     >
                       <Input placeholder="Please enter Phone No" />
                     </Form.Item>
@@ -132,7 +174,7 @@ const { Title, Text } = Typography;
                <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
-                      name=" registrationNo"
+                      name="registrationNo"
                       label="Registration No"
                     >
                       <Input placeholder="Please enter Registration No" />

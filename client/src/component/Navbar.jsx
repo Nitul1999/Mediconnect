@@ -35,7 +35,7 @@ export const Navbar = ({ role }) => {
         { title: "Home", path: "/", icon: <i className="ri-home-9-line"></i>, onClick: () => navigate('/') },
         { title: "Dashboard", path: "/dashboard", icon: <i className="ri-dashboard-2-line"></i>, onClick: () => navigate('/dashboard') },
         { title: "Patients", path: "/patients", icon: <i className="ri-user-line"></i>, onClick: () => navigate('/patients') },
-        { title: "Doctors", path: "/doctors", icon: <i className="ri-user-2-line"></i>, onClick: () => navigate('/employees') },
+        { title: "Employees", path: "/employees", icon: <i className="ri-user-2-line"></i>, onClick: () => navigate('/employees') },
         // { title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'),special: true },
     ];
 

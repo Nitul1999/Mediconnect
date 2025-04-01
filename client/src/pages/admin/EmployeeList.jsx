@@ -124,6 +124,7 @@ const EmployeeList = () => {
             <p><strong>Type:</strong> {emp.emptype.toUpperCase()}</p>
             <div className="flex justify-spacebtn">
               <Button type="primary" className="btn-primary" onClick={() => viewDetails(emp)}>View Details</Button>
+             
               { userrole ==='admin' && ( // this is only for admin
                 <>
                   <Button type="primary" onClick={() => viewDetails(emp)}>update</Button>
@@ -165,7 +166,7 @@ const EmployeeList = () => {
             <p><b>Employee Type:</b> {selectedEmployee.emptype.toUpperCase()}</p>
 
             {/* Timetable Section */}
-            <h3>Doctor Timetable</h3>
+            <h4>Doctor Timetable</h4>
             {selectedEmployee.timetable && selectedEmployee.timetable.length > 0 ? (
               selectedEmployee.timetable.map((entry) => (
                 <Card key={entry._id} className="timetable-card">

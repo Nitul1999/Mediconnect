@@ -48,11 +48,13 @@ const { Title, Text } = Typography;
                 message.error(error.response?.data?.message || "Something went wrong!");
               }
       }
+
       const logout = async(e)=>{
-        localStorage.removeItem('token')
-        navigate('/')
-        window.location.reload()
+        localStorage.removeItem('token') // remove the token 
+        navigate('/') // go to home page 
+        window.location.reload() // reload the page
       }
+      
   return (
     <div className=''>
       <div className=''>

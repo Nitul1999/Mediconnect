@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const schema = mongoose.Schema
 const personschema = new mongoose.Schema({
     //user details//
-    patientname:{type:String,require:true},
+    name:{type:String,require:true},
     password:{type:String,require:true},
     dateofbirth:{type:dateofbirth,require:true},
     gender:{type:String,enum:['Male','Female','Transgender']},

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Input, Button, Modal, Form, message,Popconfirm } from "antd";
+import { Card, Input, Button, Modal, Form, message,Popconfirm,DatePicker } from "antd";
 import "./EmployeeList.css"; // Custom CSS for smooth animations
 import  axiosInstance  from '../../apicalls/index'
 import {jwtDecode} from'jwt-decode'
@@ -185,7 +185,7 @@ const EmployeeList = () => {
                 <Form form={timetableForm} layout="vertical" onFinish={addTimetable}>
                   <h3>Add Timetable</h3>
                   <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
-                    <Input placeholder="e.g. Monday" />
+                    <Input type="week"  placeholder="e.g. Monday" />
                   </Form.Item>
                   <Form.Item name="timing" label="Timing" rules={[{ required: true, message: "Please enter the timing" }]}>
                     <Input placeholder="e.g. 10:00 AM - 4:00 PM" />

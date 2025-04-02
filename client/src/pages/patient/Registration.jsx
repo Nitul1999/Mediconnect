@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import {Link} from 'react-router-dom'
 import { Button, Form, Input, Radio,DatePicker  } from 'antd';
 
 
@@ -17,17 +17,17 @@ export const Registration =()=>{
         },
       };
     return (
-        <div className="container">
+        <div className="container flex justify-spacebtn w-1 gap-3 p2">
             <div>
-
+              <img src="" alt="image this side" />
             </div>
         
-            <div>
+            <div className="flex item-end  p2">
                 <Form
                 {...formItemLayout}
                 form={form}
                 variant={underlined}
-                style={{ maxWidth: 800 }}
+                style={{ width: 800 }}
             >
             
                 <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter Name!' }]}>
@@ -47,8 +47,8 @@ export const Registration =()=>{
                 </Radio.Group>
                 </Form.Item>
                 <Form.Item
-                        label="DatePicker"
-                        name="DatePicker"
+                        label="Date of Birth"
+                        name="dateofbirth"
                         rules={[{ required: true, message: 'Please input!' }]}
                     >
                     <DatePicker />
@@ -82,7 +82,8 @@ export const Registration =()=>{
                     <Button type="primary" htmlType="submit">
                         Submit
                     </Button>
-                </Form.Item>
+                    <p>Already Have an Account ? <Link to="/signin">Login</Link></p>
+                </Form.Item>              
                 </Form>
             </div>
       </div>

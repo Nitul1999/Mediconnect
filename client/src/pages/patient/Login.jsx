@@ -1,5 +1,5 @@
 import React from 'react'
-// import axios from 'axios'
+import { Link } from "react-router-dom";
 import {Form,Input,Button, message} from 'antd';
 import  axiosInstance  from '../../apicalls/index'
 
@@ -26,7 +26,7 @@ export const Login = () => {
 
   return (
     <div>
-        <div className=" h-1 flex justify-center item-center">
+        <div className="flex justify-center item-center">
             <div className="form">
                 <div className="form-heading">
                     <h2 className='text-center'>Login</h2>
@@ -43,6 +43,7 @@ export const Login = () => {
                                 <Button type='primary'htmlType="submit" >
                                     Login
                                 </Button>
+                                <p>Don't have an Account ? <Link to="/signup">Sign Up</Link></p>
                             </Form.Item>
 
                     </Form>

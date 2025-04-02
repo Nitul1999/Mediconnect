@@ -54,9 +54,9 @@ export const Navbar = ({ role }) => {
     if (!isLoggedIn) {
         menu.push({
             title: "Sign In",
-            path: "/sign-in",
+            path: "/signin",
             icon: <i className="ri-login-circle-line"></i>,
-            onClick: () => navigate('/sign-in'),
+            onClick: () => navigate('/signin'),
             special: true
         });
     }

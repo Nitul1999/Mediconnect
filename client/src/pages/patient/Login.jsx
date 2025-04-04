@@ -31,7 +31,7 @@ export const Login = () => {
                 <div className="form-heading">
                     <h2 className='text-center'>Login</h2>
                 </div>
-                <div className="form-element w-3">
+                <div className="form-element w-3 ">
                     <Form layout='vertical' name='login' onFinish={onfinish}>
                             <Form.Item label="Email" name="email">
                                 <Input type="email" placeholder="Enter your Email" />
@@ -39,12 +39,14 @@ export const Login = () => {
                              <Form.Item label="Password" name="password">
                                 <Input type="password" placeholder="Enter your Password" />
                             </Form.Item>
-                            <Form.Item>
-                                <Button type='primary'htmlType="submit" >
+                            <Form.Item  className='flex justify-center'>
+                                <Button type='primary'htmlType="submit"  >
                                     Login
                                 </Button>
-                                <p>Don't have an Account ? <Link to="/signup">Sign Up</Link></p>
                             </Form.Item>
+
+                            <p className='text-center text-md '>Don't have an Account ? <Link to="/signup" className='log-sign'>Sign Up</Link></p>
+                            
 
                     </Form>
                 </div>

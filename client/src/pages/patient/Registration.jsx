@@ -17,7 +17,7 @@ export const Registration =()=>{
         },
       };
     return (
-        <div className="container flex justify-spacebtn w-1 gap-3 p2">
+        <div className="container flex justify-spacebtn gap-3 p2">
             <div>
               <img src="" alt="image this side" />
             </div>
@@ -78,12 +78,13 @@ export const Registration =()=>{
                         <Input.Password />
                 </Form.Item>
 
-                <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                <Form.Item wrapperCol={{ offset: 6, span: 16 }} className='flex justify-center'>
                     <Button type="primary" htmlType="submit">
                         Submit
                     </Button>
-                    <p>Already Have an Account ? <Link to="/signin">Login</Link></p>
-                </Form.Item>              
+                </Form.Item>  
+                    <p className='text-center text-md '>Already Have an Account !! <Link to="/signin" className='log-sign'>Login</Link></p>
+                            
                 </Form>
             </div>
       </div>

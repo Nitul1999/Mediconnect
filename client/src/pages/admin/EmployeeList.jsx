@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, Input, Button, Modal, Form, message,Popconfirm,DatePicker } from "antd";
+import { Card, Input, Button, Modal, Form, message,Popconfirm,Select, Row, Col } from "antd";
 import "./EmployeeList.css"; // Custom CSS for smooth animations
 import  axiosInstance  from '../../apicalls/index'
 import {jwtDecode} from'jwt-decode'
+const { Option } = Select;
 
 const EmployeeList = () => {
 
@@ -10,12 +11,13 @@ const EmployeeList = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [timetableForm] = Form.useForm();
+  const [updateForm] = Form.useForm();
   //get user role from token
   const token = localStorage.getItem('token');
   const decoded = jwtDecode(token);
   const userrole = decoded.role;
-  console.log(userrole)
   
   // Fetch employee data
   useEffect(() => {
@@ -70,6 +72,7 @@ const EmployeeList = () => {
       message.error("Failed to add timetable.");
     }
   };
+ 
 
   // Delete Doctor Timetable
   const deleteTimetable = async (timetableId) => {
@@ -83,6 +86,35 @@ const EmployeeList = () => {
     }
     //
   };
+ //update employee details by admin
+  const openUpdateModal = (employee) => {
+    setSelectedEmployee(employee);
+    updateForm.setFieldsValue(employee);
+    setIsUpdateModalOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+    setSelectedEmployee(null);
+  };
+
+  const updateEmployee = async (values) => {
+    console.log(values)
+    console.log(selectedEmployee._id)
+      try {
+       const response =   await axiosInstance.patch(`/employee/profile/update/${selectedEmployee._id}`,values);
+       if (response.data) {
+        message.success(response.data.message);
+        fetchEmployees();
+        closeUpdateModal();
+        // window.location.reload()
+
+      }   
+      } catch (error) {
+        message.error("Failed to update employee.");
+      }
+    };
+  
   // Delete Employee
   const deleteEmployee = async (empId) => {
     try {
@@ -104,7 +136,7 @@ const EmployeeList = () => {
           </>
 
   return (
-    <div className="employee-container">
+    <div className="employee-container p1">
      
       <h2 className="title">Employee List</h2>
 
@@ -119,15 +151,15 @@ const EmployeeList = () => {
       <div className="card-container">
         {filteredEmployees.map((emp) => (
           <Card key={emp._id} className="employee-card">
+            <h2><strong>Name:</strong> {emp.name} </h2>
             <p><strong>Reg No:</strong> {emp.registrationNo}</p>
-            <p><strong>Name:</strong> {emp.name}</p>
             <p><strong>Type:</strong> {emp.emptype.toUpperCase()}</p>
             <div className="flex justify-spacebtn">
               <Button type="primary" className="btn-primary" onClick={() => viewDetails(emp)}>View Details</Button>
              
               { userrole ==='admin' && ( // this is only for admin
                 <>
-                  <Button type="primary" onClick={() => viewDetails(emp)}>update</Button>
+                  <Button type="primary" onClick={() => openUpdateModal(emp)}>update</Button>
                     <Popconfirm
                       title="Delete Employee!!"
                       description="Are you sure to delete this Employee..?"
@@ -153,39 +185,72 @@ const EmployeeList = () => {
         visible={isModalOpen}
         onCancel={handleClose}
         footer={null}
-        width="60%"
+        width="40%"
         className="details-modal"
       >
         {selectedEmployee && (
           <div className="employee-details">
-            <h3>{selectedEmployee.name}</h3>
-            <p><b>Registration No:</b> {selectedEmployee.registrationNo}</p>
-            <p><b>Email:</b> {selectedEmployee.email}</p>
-             <p><b>Contact No:</b> {selectedEmployee.phone}</p>
-            <p><b>Specialization:</b> {selectedEmployee.specialization}</p>
-            <p><b>Employee Type:</b> {selectedEmployee.emptype.toUpperCase()}</p>
+            <h3> Employee: {selectedEmployee.name}</h3>
+            <Row gutter={14}>
+              <Col span={7}>
+                    <p><b>Registration No:</b> {selectedEmployee.registrationNo}</p>
+              </Col>
+              <Col span={7}>
+                   <p><b>Email:</b> {selectedEmployee.email}</p>
+              </Col>
+            </Row>
+            <Row gutter={14}>
+              <Col span={7}>
+                    <p><b>Contact No:</b> {selectedEmployee.phone}</p>
+               </Col>
+               <Col span={7}>
+                   <p><b>Specialization:</b> {selectedEmployee.specialization}</p>
+              </Col>
+              <Col span={7}>
+                    <p><b>Employee Type:</b> {selectedEmployee.emptype.toUpperCase()}</p>
+              </Col>
+              </Row>
 
             {/* Timetable Section */}
             <h4>Doctor Timetable</h4>
+            <div className=" flex p2 gap-2">
             {selectedEmployee.timetable && selectedEmployee.timetable.length > 0 ? (
               selectedEmployee.timetable.map((entry) => (
-                <Card key={entry._id} className="timetable-card">
-                  <p><b>Day:</b> {entry.day}</p>
-                  <p><b>Timing:</b> {entry.timing}</p>
-                  <Button danger onClick={() => deleteTimetable(entry._id)}>Delete</Button>
-                </Card>
+                // <Row gutter={10}>
+                //   <Col span={10}>
+                    <Card key={entry._id} className="timetable-card flex">
+                      <p><b>Day:</b> {entry.day.toUpperCase()}</p>
+                      <p><b>Timing:</b> {entry.timing.toUpperCase()}</p>
+                      {userrole ==='admin' && ( <Button danger onClick={() => deleteTimetable(entry._id)}>Delete</Button>  )}                           
+                    </Card>
+                //   </Col>
+                // </Row>
               ))
             ) : (
               <p>No timetable available</p>
             )}
+            </div>
 
             {/* Add Timetable Form */}
             {userrole ==='admin' &&  ( // this is only for admin
               <>
                 <Form form={timetableForm} layout="vertical" onFinish={addTimetable}>
                   <h3>Add Timetable</h3>
-                  <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
-                    <Input type="week"  placeholder="e.g. Monday" />
+                  {/* <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
+                    <Input  placeholder="e.g. Monday" />
+                  </Form.Item> */}
+                  <Form.Item 
+                    name="day" 
+                    label="Day" 
+                    rules={[{ required: true, message: "Please select a day" }]}
+                  >
+                    <Select placeholder="Select a day">
+                      <Option value="monday">Monday</Option>
+                      <Option value="tuesday">Tuesday</Option>
+                      <Option value="wednesday">Wednesday</Option>
+                      <Option value="thursday">Thursday</Option>
+                      <Option value="friday">Friday</Option>
+                    </Select>
                   </Form.Item>
                   <Form.Item name="timing" label="Timing" rules={[{ required: true, message: "Please enter the timing" }]}>
                     <Input placeholder="e.g. 10:00 AM - 4:00 PM" />
@@ -200,6 +265,33 @@ const EmployeeList = () => {
         )}
       </Modal>
 
+      <Modal
+              title="Update Employee"
+              open={isUpdateModalOpen}
+              onCancel={closeUpdateModal}
+              footer={null}
+              width="50%"
+              className="update-modal"
+            >
+              <Form form={updateForm} layout="vertical" onFinish={updateEmployee}>
+                <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter employee name" }]}>
+                  <Input />
+                </Form.Item>
+                <Form.Item name="email" label="Email" rules={[{ required: true, message: "Please enter email" }]}>
+                  <Input />
+                </Form.Item>
+                <Form.Item name="specialization" label="Specialization">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="emptype" label="Employee Type" rules={[{ required: true, message: "Please select employee type" }]}>
+                    <Select placeholder="Select Employee Type">
+                        <Select.Option value="Doctor">Doctor</Select.Option>
+                        <Select.Option value="Lab Tech">Lab Tech</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Button type="primary" htmlType="submit">Save Changes</Button>
+              </Form>
+      </Modal>
     </div>
   );
 };

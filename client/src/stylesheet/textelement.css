@@ -50,3 +50,15 @@ i {
     font-size: 25px;
     color: white !important;
 }
+.log-sign{
+    font-size: 16px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transition: all 1s ease-in-out;
+}
+.log-sign:hover{
+    text-decoration: none;
+    border-bottom:1px solid var(--primary);
+    padding: 2px;
+    border-radius: 2px;
+    font-size: 17px;
+}

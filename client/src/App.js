@@ -18,6 +18,7 @@ import { HeaderSecond } from './component/HeaderSecond';
 import { Login } from './pages/patient/Login';
 import { Profile } from './pages/common/Profile';
 import { Footer } from './component/Footer';
+import { Registration } from './pages/patient/Registration';
 
 function App() {
 
@@ -48,7 +49,8 @@ function App() {
         <Route path='/' element={<Home />} />  
         {/* <Route path ='/login' element={<LoginAddministration /> }/> */}
         <Route path='/profile' element={ <Profile />} />
-        <Route path='/sign-in' element ={ <Login />}/>
+        <Route path='/signin' element ={ <Login />}/>
+         <Route path ='/signup' element={<Registration />} />
         <Route path='/add-employee' element={< Addemployees/> }/>
         <Route path='/employees' element={<EmployeeList/>}/>
       </Routes>

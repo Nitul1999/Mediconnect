@@ -19,7 +19,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 45px;
-    justify-content: center;;
+    justify-content: center;
+    padding-bottom: 40px;
   }
   
   .employee-card {

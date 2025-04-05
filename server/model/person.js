@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema
 const personschema = new mongoose.Schema({
-    //user details//
     name:{type:String,require:true},
     password:{type:String,require:true},
     dateofbirth:{type:dateofbirth,require:true},
@@ -38,8 +37,7 @@ const personschema = new mongoose.Schema({
       prescription:{type:String}, 
       doctorName:{type:String},
       diagnosis:{type:String},
-    },
-    ],
+     }],
     labReports: [
         {
           testName:{type:String},

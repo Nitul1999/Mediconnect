@@ -16,7 +16,7 @@ const EmployeeList = () => {
   const [updateForm] = Form.useForm();
 
   //get user role from token
-  
+
   const token = localStorage.getItem('token');
   const decoded = jwtDecode(token);
   const userrole = decoded.role;
@@ -192,77 +192,91 @@ const EmployeeList = () => {
       >
         {selectedEmployee && (
           <div className="employee-details">
-            <h3> Employee: {selectedEmployee.name}</h3>
-            <Row gutter={14}>
-              <Col span={7}>
-                    <p><b>Registration No:</b> {selectedEmployee.registrationNo}</p>
-              </Col>
-              <Col span={7}>
-                   <p><b>Email:</b> {selectedEmployee.email}</p>
-              </Col>
-            </Row>
-            <Row gutter={14}>
-              <Col span={7}>
-                    <p><b>Contact No:</b> {selectedEmployee.phone}</p>
-               </Col>
-               <Col span={7}>
-                   <p><b>Specialization:</b> {selectedEmployee.specialization}</p>
-              </Col>
-              <Col span={7}>
-                    <p><b>Employee Type:</b> {selectedEmployee.emptype.toUpperCase()}</p>
-              </Col>
-              </Row>
+                <h3> Employee: {selectedEmployee.name}</h3>
+                <Row gutter={14}>
+                  <Col span={7}>
+                        <p><b>Registration No:</b> {selectedEmployee.registrationNo}</p>
+                  </Col>
+                  <Col span={7}>
+                      <p><b>Email:</b> {selectedEmployee.email}</p>
+                  </Col>
+                </Row>
+                <Row gutter={14}>
+                  <Col span={7}>
+                        <p><b>Contact No:</b> {selectedEmployee.phone}</p>
+                  </Col>
+                  <Col span={7}>
+                      <p><b>Specialization:</b> {selectedEmployee.specialization}</p>
+                  </Col>
+                  <Col span={7}>
+                        <p><b>Employee Type:</b> {selectedEmployee.emptype.toUpperCase()}</p>
+                  </Col>
+                  </Row>
 
-            {/* Timetable Section */}
-            <h4>Doctor Timetable</h4>
-            <div className=" flex p2 gap-2">
-            {selectedEmployee.timetable && selectedEmployee.timetable.length > 0 ? (
-              selectedEmployee.timetable.map((entry) => (
-                // <Row gutter={10}>
-                //   <Col span={10}>
-                    <Card key={entry._id} className="timetable-card flex">
-                      <p><b>Day:</b> {entry.day.toUpperCase()}</p>
-                      <p><b>Timing:</b> {entry.timing.toUpperCase()}</p>
-                      {userrole ==='admin' && ( <Button danger onClick={() => deleteTimetable(entry._id)}>Delete</Button>  )}                           
-                    </Card>
-                //   </Col>
-                // </Row>
-              ))
-            ) : (
-              <p>No timetable available</p>
-            )}
-            </div>
+                {/* Timetable Section */}
+                {
+                  (selectedEmployee.emptype ==='doctor' || selectedEmployee.emptype === 'admin') && (
+                    <>
+                        <h4>Doctor Timetable</h4>
+                        <div className=" flex p2 gap-2">
+                        {selectedEmployee.timetable && selectedEmployee.timetable.length > 0 ? (
+                          selectedEmployee.timetable.map((entry) => (
+                            // <Row gutter={10}>
+                            //   <Col span={10}>
+                                <Card key={entry._id} className="timetable-card flex">
+                                  <p><b>Day:</b> {entry.day.toUpperCase()}</p>
+                                  <p><b>Timing:</b> {entry.timing.toUpperCase()}</p>
+                                  {userrole ==='admin' && ( <Button danger onClick={() => deleteTimetable(entry._id)}>Delete</Button>  )}                           
+                                </Card>
+                            //   </Col>
+                            // </Row>
+                          ))
+                        ) : (
+                          <p>No timetable available</p>
+                        )}
+                        </div>
+                    </>
+                  )
+                }
+              
+              {
+                selectedEmployee.emptype==='doctor' && (
+                  <>
+                  {/* Add Timetable Form */}
+                {userrole ==='admin' &&  ( // this is only for admin
+                  <>
+                    <Form form={timetableForm} layout="vertical" onFinish={addTimetable}>
+                      <h3>Add Timetable</h3>
+                      {/* <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
+                        <Input  placeholder="e.g. Monday" />
+                      </Form.Item> */}
+                      <Form.Item 
+                        name="day" 
+                        label="Day" 
+                        rules={[{ required: true, message: "Please select a day" }]}
+                      >
+                        <Select placeholder="Select a day">
+                          <Option value="monday">Monday</Option>
+                          <Option value="tuesday">Tuesday</Option>
+                          <Option value="wednesday">Wednesday</Option>
+                          <Option value="thursday">Thursday</Option>
+                          <Option value="friday">Friday</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item name="timing" label="Timing" rules={[{ required: true, message: "Please enter the timing" }]}>
+                        <Input placeholder="e.g. 10:00 AM - 4:00 PM" />
+                      </Form.Item>
+                      <Button type="primary" htmlType="submit">Add Timetable</Button>
+                    </Form>
+                
+                  </>
+                ) }
+                  </>
+                )
+              }
 
-            {/* Add Timetable Form */}
-            {userrole ==='admin' &&  ( // this is only for admin
-              <>
-                <Form form={timetableForm} layout="vertical" onFinish={addTimetable}>
-                  <h3>Add Timetable</h3>
-                  {/* <Form.Item name="day" label="Day" rules={[{ required: true, message: "Please enter the day" }]}>
-                    <Input  placeholder="e.g. Monday" />
-                  </Form.Item> */}
-                  <Form.Item 
-                    name="day" 
-                    label="Day" 
-                    rules={[{ required: true, message: "Please select a day" }]}
-                  >
-                    <Select placeholder="Select a day">
-                      <Option value="monday">Monday</Option>
-                      <Option value="tuesday">Tuesday</Option>
-                      <Option value="wednesday">Wednesday</Option>
-                      <Option value="thursday">Thursday</Option>
-                      <Option value="friday">Friday</Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item name="timing" label="Timing" rules={[{ required: true, message: "Please enter the timing" }]}>
-                    <Input placeholder="e.g. 10:00 AM - 4:00 PM" />
-                  </Form.Item>
-                  <Button type="primary" htmlType="submit">Add Timetable</Button>
-                </Form>
-            
-               </>
-            ) }
-          
+               
+              
           </div>
         )}
       </Modal>

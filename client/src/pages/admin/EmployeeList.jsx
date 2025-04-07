@@ -285,8 +285,8 @@ const EmployeeList = () => {
                 </Form.Item>
                 <Form.Item name="emptype" label="Employee Type" rules={[{ required: true, message: "Please select employee type" }]}>
                     <Select placeholder="Select Employee Type">
-                        <Select.Option value="Doctor">Doctor</Select.Option>
-                        <Select.Option value="Lab Tech">Lab Tech</Select.Option>
+                        <Select.Option value="doctor">Doctor</Select.Option>
+                        <Select.Option value="labtech">Lab Tech</Select.Option>
                     </Select>
                 </Form.Item>
                 <Button type="primary" htmlType="submit">Save Changes</Button>

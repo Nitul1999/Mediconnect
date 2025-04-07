@@ -19,8 +19,7 @@ export const HeaderSecond = () => {
       };
      const endpoints ={
                 admin: '/admin/login',
-                doctor:'/employee/login',
-                labtech:'/employee/login'
+                employee:'/employee/login'
             }
     const onfinish= async(values) =>{
             try {
@@ -46,9 +45,7 @@ export const HeaderSecond = () => {
     <div>
         <div className="opening flex justify-end p1-bottom">
             <div>
-               {/* <Link to="/login">
-                            <Button>Login For Administrative</Button>
-                </Link> */}
+              
                 <Button type="primary" onClick={showDrawer}>
                   Login For Administrative
                 </Button>
@@ -73,8 +70,7 @@ export const HeaderSecond = () => {
                          <Form.Item label="Selet Your Role" name="role">
                                 <Select defaultValue={role} onChange={setRole}>
                                     <Option value="admin">Admin</Option>
-                                     <Option value="doctor">Doctor</Option>
-                                    <Option value="labtech">Lab-Technician</Option>
+                                    <Option value='employee'>Employee</Option>
                                 </Select>
                             </Form.Item>
                             <Form.Item label="Email" name="email" rules={[{ required: true, message: "Please Enter Your Email" }]}>

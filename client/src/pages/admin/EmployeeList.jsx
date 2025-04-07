@@ -14,7 +14,9 @@ const EmployeeList = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [timetableForm] = Form.useForm();
   const [updateForm] = Form.useForm();
+
   //get user role from token
+  
   const token = localStorage.getItem('token');
   const decoded = jwtDecode(token);
   const userrole = decoded.role;
@@ -266,31 +268,31 @@ const EmployeeList = () => {
       </Modal>
 
       <Modal
-              title="Update Employee"
-              open={isUpdateModalOpen}
-              onCancel={closeUpdateModal}
-              footer={null}
-              width="50%"
-              className="update-modal"
-            >
-              <Form form={updateForm} layout="vertical" onFinish={updateEmployee}>
-                <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter employee name" }]}>
-                  <Input />
-                </Form.Item>
-                <Form.Item name="email" label="Email" rules={[{ required: true, message: "Please enter email" }]}>
-                  <Input />
-                </Form.Item>
-                <Form.Item name="specialization" label="Specialization">
-                  <Input />
-                </Form.Item>
-                <Form.Item name="emptype" label="Employee Type" rules={[{ required: true, message: "Please select employee type" }]}>
-                    <Select placeholder="Select Employee Type">
-                        <Select.Option value="doctor">Doctor</Select.Option>
-                        <Select.Option value="labtech">Lab Tech</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Button type="primary" htmlType="submit">Save Changes</Button>
-              </Form>
+          title="Update Employee"
+          open={isUpdateModalOpen}
+          onCancel={closeUpdateModal}
+          footer={null}
+          width="50%"
+          className="update-modal"
+        >
+          <Form form={updateForm} layout="vertical" onFinish={updateEmployee}>
+            <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter employee name" }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name="email" label="Email" rules={[{ required: true, message: "Please enter email" }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name="specialization" label="Specialization">
+              <Input />
+            </Form.Item>
+            <Form.Item name="emptype" label="Employee Type" rules={[{ required: true, message: "Please select employee type" }]}>
+                <Select placeholder="Select Employee Type">
+                    <Select.Option value="doctor">Doctor</Select.Option>
+                    <Select.Option value="labtech">Lab Tech</Select.Option>
+                </Select>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">Save Changes</Button>
+          </Form>
       </Modal>
     </div>
   );

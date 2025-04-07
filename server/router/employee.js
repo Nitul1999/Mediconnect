@@ -91,4 +91,17 @@ router.patch('/profile/update/:id',async(req,res)=>{ //used patch becaused modif
     }
 })
 
+//only doctors view
+router.get("/all/doctor",async(req,res)=>{
+    try {
+        const data = await employee.find({emptype:'doctor'})
+        if(!data){
+            res.status(200).send({message:'Doctor not available',success:false})
+        }
+        res.status(200).json({message:"All Doctors", success:true,data:data});
+    } catch (error) {
+        res.status(500).json({message:"Internal Server Error"})       
+    }
+})
+
 module.exports = router;

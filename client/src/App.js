@@ -19,6 +19,7 @@ import { Login } from './pages/patient/Login';
 import { Profile } from './pages/common/Profile';
 import { Footer } from './component/Footer';
 import { Registration } from './pages/patient/Registration';
+import { Doctores } from './pages/common/Doctores';
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
          <Route path ='/signup' element={<Registration />} />
         <Route path='/add-employee' element={< Addemployees/> }/>
         <Route path='/employees' element={<EmployeeList/>}/>
+        <Route path='/doctors' element={<Doctores />}/>
       </Routes>
       <Footer />
    </BrowserRouter>

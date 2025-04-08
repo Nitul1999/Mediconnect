@@ -84,9 +84,10 @@ export const HeaderSecond = () => {
                                     Login
                                 </Button>
                             </Form.Item>
+                            <p className='text-center'>Forget Password? <span className='text-md change-password'>Change Password</span> </p>
 
                          </Form>
-                        </div>
+                      </div>
                     </Drawer>
             </div>
         </div>

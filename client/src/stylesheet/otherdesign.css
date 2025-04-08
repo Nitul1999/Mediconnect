@@ -6,3 +6,9 @@
  width: 20%;
  height: 20%;
 }
+
+.change-password{
+    cursor: pointer;
+    color: red ;
+    transition: 1.1s;
+}

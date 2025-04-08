@@ -1,7 +1,7 @@
 import React,{ useEffect, useState }  from 'react'
 import  axiosInstance  from '../../apicalls/index'
-
 import {message} from 'antd'
+
 export const Doctores = () => {
    
   const [doctores, setDoctores] = useState([]);
@@ -45,3 +45,4 @@ export const Doctores = () => {
     </div>
   )
 }
+

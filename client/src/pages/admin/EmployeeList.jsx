@@ -223,7 +223,7 @@ const EmployeeList = () => {
                           selectedEmployee.timetable.map((entry) => (
                             // <Row gutter={10}>
                             //   <Col span={10}>
-                                <Card key={entry._id} className="timetable-card flex">
+                                 <Card key={entry._id} className="timetable-card flex flex-wrap">
                                   <p><b>Day:</b> {entry.day.toUpperCase()}</p>
                                   <p><b>Timing:</b> {entry.timing.toUpperCase()}</p>
                                   {userrole ==='admin' && ( <Button danger onClick={() => deleteTimetable(entry._id)}>Delete</Button>  )}                           

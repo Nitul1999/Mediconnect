@@ -6,9 +6,9 @@ import  axiosInstance  from '../../apicalls/index'
 export const Login = () => {
 
     const onfinish= async(values) =>{
+        console.log(values)
           try {
-           const response = await axiosInstance.post("/login",values) 
-    
+           const response = await axiosInstance.post("/person/login",values) 
             if(response.data.success){
                message.success(response.data.message)
                localStorage.setItem('token', response.data.data)

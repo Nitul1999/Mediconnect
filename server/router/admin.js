@@ -215,8 +215,6 @@ router.delete("/employee-delete-profile/:id", async (req, res) => {
     }
 });
 
-
-
 //update doctor timetbale from admin ...working
 router.patch('/employee/doctor-timetable/:id',async(req,res)=>{
     try {

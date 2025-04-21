@@ -12,12 +12,13 @@ const dbconfig = require('./config/dbconnection')
 
 const adminroutes = require('./router/admin');
 const employeeroutes = require('./router/employee')
-//const personroutes=require('./router/person')
+const personroutes = require('./router/person')
+
 
 //api end point start//
 app.use('/api/admin',adminroutes)
 app.use('/api/employee',employeeroutes)
-//app.use('/api/person',personroutes)
+app.use('/api/person',personroutes)
 
 
 //running app 
@@ -25,5 +26,5 @@ dbconfig.once('connected',()=>{
     console.log('connected to database....')
     app.listen(port,()=>{
         console.log(`app is running on ${port}`)
-})
+    })
 })

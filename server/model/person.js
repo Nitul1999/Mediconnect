@@ -14,6 +14,7 @@ const personschema = new mongoose.Schema({
     state:{type:String },
     postalCode:{type:String },
     country:{type:String},
+    emptype:{type:String,default:"patient"},
       //appointment//
     appointments:
     [
@@ -21,8 +22,8 @@ const personschema = new mongoose.Schema({
       appointmentdate:{type:Date,required:true},
       appointmenttime:{type:String,required:true},
       doctorname:{type:String,required:true},
-      queueNumber:{type:Number,required:true},
       doctorSpecialty:{type:String},
+      reason:{type:String},
       symptoms:{type:String}
       },
     ],

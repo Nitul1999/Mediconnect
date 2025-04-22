@@ -20,6 +20,7 @@ import { Profile } from './pages/common/Profile';
 import { Footer } from './component/Footer';
 import { Registration } from './pages/patient/Registration';
 import { Doctores } from './pages/common/Doctores';
+import { PatientProfile } from './pages/patient/Profile';
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
         <Route path='/add-employee' element={< Addemployees/> }/>
         <Route path='/employees' element={<EmployeeList/>}/>
         <Route path='/doctors' element={<Doctores />}/>
+        < Route path='/patientprofile'element={< PatientProfile/>}/>
       </Routes>
       <Footer />
    </BrowserRouter>

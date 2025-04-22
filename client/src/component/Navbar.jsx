@@ -43,7 +43,6 @@ export const Navbar = ({ role }) => {
         { title: "Home", path: "/", icon: <i class="ri-home-9-line"></i>, onClick: () => navigate('/') },
         { title: "About", path: "/about", icon: <i className="ri-information-line"></i>, onClick: () => navigate('/about') },
         { title: "Doctors", path: "/doctors", icon: <i className="ri-user-2-line"></i>, onClick: () => navigate('/doctors') },
-        // { title: "Departments", path: "/departments", icon: <i className="ri-hospital-line"></i>, onClick: () => navigate('/departments') },
         { title: "Contact", path: "/contact", icon: <i className="ri-contacts-line"></i>, onClick: () => navigate('/contact') },
         { title: "Make an Appointment", path: "/make-appointment", icon: <i className="ri-calendar-line"></i>, onClick: () => navigate('/make-appointment'),special: true },
     ];
@@ -62,7 +61,9 @@ export const Navbar = ({ role }) => {
     }
     if (isLoggedIn) {
                 adminMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'), special: true });
-    }           employeeMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'), special: true });
+                employeeMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'), special: true });
+                patientMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/patientprofile'), special: true });
+        }    
     return (
         <div className="layout " >
             <div className="layout__header">

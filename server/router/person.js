@@ -38,24 +38,30 @@ router.post('/register',async(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
-    console.log(req.body)
+   
     try {
         const {email,password}= req.body
-        const person = await person.findOne({email})
+        console.log(email)
+        const user = await person.findOne({email})
+        if(!user){
+            return res.status(400).send({message:"Account Not Found!! Please Create Account First..",success:false})
+        }
          if (!email || !password) {
             return res.status(400).send({ message: "Email and Password are required", success: false });
         }
-        const isMatch = await bcrypt.compare(password, person.password)
+        const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch){
             return res.status(400).send({message:"Invaild Password..",success:false})
         }
         const token = jwt.sign(
             {
-                userid:person._id,
+                userid:user._id,
+                role: user.emptype
             },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         )
+      
         res.send({
             message:"Login Successfull",
             success:true,

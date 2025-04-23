@@ -21,6 +21,7 @@ import { Footer } from './component/Footer';
 import { Registration } from './pages/patient/Registration';
 import { Doctores } from './pages/common/Doctores';
 import { PatientProfile } from './pages/patient/Profile';
+import { Appointmentform } from './pages/patient/Appointmentform';
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
         <Route path='/employees' element={<EmployeeList/>}/>
         <Route path='/doctors' element={<Doctores />}/>
         < Route path='/patientprofile'element={< PatientProfile/>}/>
+        <Route path ='/make-appointment' element={< Appointmentform/>}/>
       </Routes>
       <Footer />
    </BrowserRouter>

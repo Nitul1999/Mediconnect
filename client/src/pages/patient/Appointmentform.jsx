@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, use } from 'react';
 import { Form, Input, DatePicker, TimePicker, Select, Button,message } from 'antd';
 import  axiosInstance  from '../../apicalls/index'
 const { Option } = Select;
@@ -8,6 +8,9 @@ export const Appointmentform =()=>{
     const [doctor,setDoctor] = useState([]);
     const [selectDoc,setSelectDoc] = useState(null);
     const [ time,setTime] = useState([]);
+    const [day,setDay]=useState([])
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [filteredDoctors, setFilteredDoctors] = useState([]);
 
     // fetching doctors details
     useEffect(()=>{
@@ -25,10 +28,27 @@ export const Appointmentform =()=>{
         fetchdoctors();
     },[]);
 
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        if (date) {
+            const dayOfWeek = date.day(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+            const availableDoctors = doctor.filter(doctor =>
+                doctor.timetable.some(slot => slot.day === dayOfWeek)
+            );
+            setFilteredDoctors(availableDoctors);
+            setSelectDoc(null); // Reset selected doctor
+            setTime([]); // Reset available times
+            setDay(availableDoctors.map(doctor => doctor.timetable.filter(slot => slot.day === dayOfWeek).map(slot => slot.day)));
+        } else {
+            setFilteredDoctors(doctor); // Reset to all doctors if no date is selected
+        }
+    };
+
     const doctorchange=(values)=>{
-        const doctors = doctor.find(doc=>doc.name === values)
+        const doctors = filteredDoctors.find(doc=>doc.name === values)
         setSelectDoc(doctors)
-        setTime(doctors? doctors.timetable.map(slot => slot.timing) : []);
+        setTime(doctors? doctors.timetable.filter(slot => slot.day===selectedDate.day()).map(slot=>slot.timing) : [])
+        // setDay(doctors? doctors.timetable.map(slot => slot.day) : [])
     }
 
     const onFinish = (values) => {
@@ -81,7 +101,7 @@ export const Appointmentform =()=>{
                         label="Appointment Date"
                         rules={[{ required: true, message: 'Please select the appointment date!' }]}
                     >
-                        <DatePicker />
+                        <DatePicker  onChange={handleDateChange} />
                     </Form.Item>
                     <Form.Item
                         name="doctorname"
@@ -89,7 +109,7 @@ export const Appointmentform =()=>{
                         rules={[{ required: true, message: 'Please input the doctor name!' }]}
                     >
                         <Select placeholder="Select Doctor Name" onChange={doctorchange}>
-                            {doctor.map(doctor =>(
+                            {filteredDoctors.map(doctor =>(
                                 <Option key={doctor._id} value={doctor.name}>{doctor.name}</Option>
                             ))}
 
@@ -97,7 +117,14 @@ export const Appointmentform =()=>{
                     </Form.Item>
                     <Form.Item 
                         name="appointmentday"
+                        label="Day"
+                        rules={[{required:true,message:'Select Your Day To Visit'}]}
                     >
+                        <Select placeholder="Select Day to be Visit" >
+                            {day.map((day,index)=>(
+                                <Option key={index} value={day}>{day}</Option>
+                            ))}
+                        </Select>
 
                     </Form.Item>
                     <Form.Item

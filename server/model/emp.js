@@ -11,7 +11,7 @@ const empSchema = new mongoose.Schema({
     emptype:{type:String,required:true},// doctor or labtech
     timetable:[{
             day:{type:String},
-            timing:{type:String}
+            timing:{type:[String]}
     }]
 })
 

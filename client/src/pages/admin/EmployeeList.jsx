@@ -225,7 +225,7 @@ const EmployeeList = () => {
                             //   <Col span={10}>
                                  <Card key={entry._id} className="timetable-card flex flex-wrap">
                                   <p><b>Day:</b> {entry.day.toUpperCase()}</p>
-                                  <p><b>Timing:</b> {entry.timing.toUpperCase()}</p>
+                                  <p><b>Timing:</b> {entry.timing}</p>
                                   {userrole ==='admin' && ( <Button danger onClick={() => deleteTimetable(entry._id)}>Delete</Button>  )}                           
                                 </Card>
                             //   </Col>

@@ -62,16 +62,22 @@ export const Appointmentform =()=>{
     //age calculation
     const handleDOBChange = (date) => {
         if (date) {
-          const today = new Date();
-          const birthDate = new Date(date.format('YYYY-MM-DD'));
-          let age = today.getFullYear() - birthDate.getFullYear();
-          const m = today.getMonth() - birthDate.getMonth();
-          if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-          }
-          form.setFieldsValue({ age: age.toString() });
+            const today = new Date();
+            const birthDate = new Date(date.format('YYYY-MM-DD'));
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+
+            // Adjust for negative months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Calculate age in decimal format
+            const ageInDecimal = years + (months / 12);
+            form.setFieldsValue({ age: ageInDecimal.toFixed(1) }); // Set age with one decimal place
         } else {
-          form.setFieldsValue({ age: '' });
+            form.setFieldsValue({ age: '' });
         }
       };
 
@@ -123,16 +129,13 @@ export const Appointmentform =()=>{
                     <Form.Item
                         name="dateofbirth"
                         label="DOB"
-                        rules={[{required:true,message:'Select Date of Birth '}]}
+                        rules={[{ required: true, message: 'Select Date of Birth ' }]}
                         >
                             <DatePicker
-                                format={{
-                                    format: 'YYYY-MM-DD',
-                                    onChange:{handleDOBChange}
-                                    // type: 'mask',
-                                }}
-                                />
-                    </Form.Item>
+                            format="YYYY-MM-DD" // Set the format directly
+                            onChange={handleDOBChange} // Directly assign the onChange prop
+                            />
+                        </Form.Item>
                     <Form.Item
                         name="age"
                         label="Age"

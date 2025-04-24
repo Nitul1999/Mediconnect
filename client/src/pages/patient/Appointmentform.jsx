@@ -8,6 +8,7 @@ export const Appointmentform =()=>{
     
     const token = localStorage.getItem('token')
 
+
     const [doctor,setDoctor] = useState([]);
     const [selectDoc,setSelectDoc] = useState(null);
     const [ time,setTime] = useState([]);
@@ -16,12 +17,14 @@ export const Appointmentform =()=>{
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [dates, setDates] = useState([]);
     const [availableDates, setAvailableDates] = useState([]);
+
+    const [form] = Form.useForm();
     // fetching doctors details
     useEffect(()=>{
         const fetchdoctors = async()=>{
         try {
             const response = await axiosInstance.get('/employee/all/doctor');
-            console.log(response.data); 
+            
             setDoctor(response.data.data);
           } catch (error) {
            message.error("Failed to fetch Doctors.");
@@ -55,6 +58,23 @@ export const Appointmentform =()=>{
             setTime([]);
         }
     };
+   
+    //age calculation
+    const handleDOBChange = (date) => {
+        if (date) {
+          const today = new Date();
+          const birthDate = new Date(date.format('YYYY-MM-DD'));
+          let age = today.getFullYear() - birthDate.getFullYear();
+          const m = today.getMonth() - birthDate.getMonth();
+          if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+          }
+          form.setFieldsValue({ age: age.toString() });
+        } else {
+          form.setFieldsValue({ age: '' });
+        }
+      };
+
     const onFinish = (values) => {
         console.log('Received values:', { ...values });
     };
@@ -76,6 +96,7 @@ export const Appointmentform =()=>{
             <div className="">
                 <div>
                     <Form
+                    form={form}
                     name="appointment_form"
                     onFinish={onFinish}
                     layout="vertical"
@@ -99,6 +120,27 @@ export const Appointmentform =()=>{
                         <Option value="other">Other</Option>
                         </Select>
                     </Form.Item>
+                    <Form.Item
+                        name="dateofbirth"
+                        label="DOB"
+                        rules={[{required:true,message:'Select Date of Birth '}]}
+                        >
+                            <DatePicker
+                                format={{
+                                    format: 'YYYY-MM-DD',
+                                    onChange:{handleDOBChange}
+                                    // type: 'mask',
+                                }}
+                                />
+                    </Form.Item>
+                    <Form.Item
+                        name="age"
+                        label="Age"
+                    >
+                        <Input readOnly/>
+
+                    </Form.Item>
+
                     <Form.Item
                         name="doctorname"
                         label="Doctor Name"

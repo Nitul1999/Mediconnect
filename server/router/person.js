@@ -41,7 +41,6 @@ router.post('/login',async(req,res)=>{
    
     try {
         const {email,password}= req.body
-        console.log(email)
         const user = await person.findOne({email})
         if(!user){
             return res.status(400).send({message:"Account Not Found!! Please Create Account First..",success:false})
@@ -60,9 +59,8 @@ router.post('/login',async(req,res)=>{
             },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
-        )
-      
-        res.send({
+        )     
+        res.json({
             message:"Login Successfull",
             success:true,
             data:token

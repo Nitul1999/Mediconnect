@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
-import { Form, Input, DatePicker, TimePicker, Select, Button,message } from 'antd';
+import { Form, Input, DatePicker, TimePicker, Select, Button,message, Result } from 'antd';
 import  axiosInstance  from '../../apicalls/index'
+import {Link} from 'react-router-dom'
 const { Option } = Select;
 
 export const Appointmentform =()=>{
@@ -59,7 +60,15 @@ export const Appointmentform =()=>{
     };
    if(!token) return(
     <>
-    <h1>Create an Account or Log-In first to Book an Appointment</h1>
+        <Result
+            status="warning"
+            title="To Create Appointment, Please Create an Account Or Login First..."
+            extra={
+            <Button type="primary" key="console">
+                <Link to="/signin" className=''>Login</Link>
+            </Button>
+            }
+        />
     </>
    )
     return(

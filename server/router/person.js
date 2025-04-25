@@ -5,7 +5,7 @@ const person = require('../model/person')
 const { default: mongoose } = require("mongoose");
 const router = express.Router()
 
-
+//create register/account
 router.post('/register',async(req,res)=>{
     console.log(req.body)
     try {
@@ -36,7 +36,7 @@ router.post('/register',async(req,res)=>{
     }
 
 })
-
+//create login
 router.post('/login',async(req,res)=>{
    
     try {
@@ -67,6 +67,32 @@ router.post('/login',async(req,res)=>{
         })
     } catch (error) {
         res.status(500).json(error)       
+    }
+})
+//create appointment
+router.put('/create-appointment/:id',async(req,res)=>{
+    try {
+        const userid = req.params
+        
+        const appointmentdata = req.body
+        console.log(appointmentdata)
+        if(!appointmentdata){
+            return res.status(500).json({message:"Invaild Operation",success:false})
+        }
+        const createapppointment ={
+            ...appointmentdata,
+            createAt:new Date(),
+        }
+        const updateappointment = await person.findByIdAndUpdate(
+            userid,{$push:{appointments:createapppointment}},
+            {new:true, runValidators:true}
+        )
+        if(!updateappointment){
+            return res.status(404).json({message:"User Not Found", success:false})
+        }
+       return res.status(200).json({message:"Appointment Created Successfully", success:true})
+    } catch (error) {
+        return res.status(500).json({message:"Server Error"})
     }
 })
 

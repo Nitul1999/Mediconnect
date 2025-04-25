@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from 'react';
-import { Form, Input, DatePicker, TimePicker, Select, Button,message, Result } from 'antd';
+import { Form, Input, DatePicker, Select, Button,message, Result,Alert } from 'antd';
 import  axiosInstance  from '../../apicalls/index'
 import {Link} from 'react-router-dom'
+import { jwtDecode } from "jwt-decode";
 const { Option } = Select;
 
 export const Appointmentform =()=>{
     
     const token = localStorage.getItem('token')
-
+    const decoded = jwtDecode(token);
+    const userid = decoded.userid
 
     const [doctor,setDoctor] = useState([]);
     const [selectDoc,setSelectDoc] = useState(null);
@@ -17,6 +19,7 @@ export const Appointmentform =()=>{
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [dates, setDates] = useState([]);
     const [availableDates, setAvailableDates] = useState([]);
+    const [specialization, setSpecialization] = useState('');
 
     const [form] = Form.useForm();
     // fetching doctors details
@@ -39,6 +42,7 @@ export const Appointmentform =()=>{
         setAvailableDates(selectedDoctor.timetable.map(slot => slot.day));
         setTime([]); // Reset available times
         setSelectedDate(null); // Reset selected date
+        setSpecialization(selectedDoctor.specialization);
     };
 
     const handleDateChange = (date) => {
@@ -81,8 +85,30 @@ export const Appointmentform =()=>{
         }
       };
 
-    const onFinish = (values) => {
-        console.log('Received values:', { ...values });
+    const onFinish = async(values) => {
+       const appointmentdata ={
+        patientname:values.patientname,
+        gender:values.gender,
+        dob:values.dateofbirth.format('YYYY-MM-DD'),
+        age:values.age,
+        contact:values.contact,
+        appointmentdate:selectedDate.format('YYYY-MM-DD'),
+        appointmentday:selectedDate.format('dddd'),
+        appointmenttime:values.appointmenttime,
+        doctorname:selectDoc.name,
+        reason:values.reason,
+        symptoms:values.symptoms,
+       };
+       try {
+        const response = await axiosInstance.put(`/person/create-appointment/${userid}`,appointmentdata)
+        if(response.data.success){
+            message.success(response.data.message)
+        }else{
+            message.error(response.data.message)
+        }
+       } catch (error) {
+             message.error(error.response?.data?.message || "Something went wrong!");
+       }
     };
    if(!token) return(
     <>
@@ -99,9 +125,9 @@ export const Appointmentform =()=>{
    )
     return(
         <div className="">
-            <div className="">
-                <div>
-                    <Form
+            <div className="m2">
+               
+                <Form
                     form={form}
                     name="appointment_form"
                     onFinish={onFinish}
@@ -135,12 +161,22 @@ export const Appointmentform =()=>{
                             format="YYYY-MM-DD" // Set the format directly
                             onChange={handleDOBChange} // Directly assign the onChange prop
                             />
-                        </Form.Item>
+                    </Form.Item>
+
                     <Form.Item
                         name="age"
                         label="Age"
                     >
                         <Input readOnly/>
+
+                    </Form.Item>
+                    
+                    <Form.Item
+                    name="contact"
+                    label="Contact number"
+                    rules={[{ required: true, message: "Please enter your phone number" },{ pattern: /^[0-9]{10}$/, message: "Please enter a valid phone number" }]}
+                    >
+                        <Input/>
 
                     </Form.Item>
 
@@ -155,25 +191,36 @@ export const Appointmentform =()=>{
                             ))}
                         </Select>
                     </Form.Item>
+                    {selectDoc && 
+                        <Alert
+                        message="Specialization in :"
+                        description={` ${selectDoc.specialization}`}
+                        type="info"
+                        showIcon
+                        />
+                    }
+                    
                     <Form.Item
                         name="appointmentdate"
                         label="Appointment Date"
                         rules={[{ required: true, message: 'Please select the appointment date!' }]}
                     >
-                     
+                    
                         <DatePicker onChange={handleDateChange}
                         disabledDate={date => {
                             if (!selectDoc) return true;
                             const day = date.format('dddd').toLowerCase();
+
                             return !selectDoc.timetable.some(slot => slot.day.toLowerCase() === day);
                             }}  />
                     </Form.Item>
+                    
                     <Form.Item
                         name="appointmenttime"
                         label="Appointment Time"
                         rules={[{ required: true, message: 'Please select the appointment time!' }]}
                     >
-                      {Array.isArray(time) && time.length > 0 ? (
+                    {Array.isArray(time) && time.length > 0 ? (
                         <Select placeholder="Select Appointment Time">
                             {time.map((timeslot, index) => (
                                 <Option key={index} value={timeslot}>
@@ -186,6 +233,7 @@ export const Appointmentform =()=>{
                             )}
                                             
                     </Form.Item>
+
                     <Form.Item
                         name="reason"
                         label="Reason for Appointment"
@@ -205,12 +253,11 @@ export const Appointmentform =()=>{
                         Submit
                         </Button>
                     </Form.Item>
-                    </Form>
+                </Form>
 
-                </div>
-                <div>
-
-                </div>
+                {/* <div>
+                            <h1>Booked</h1>
+                </div> */}
             </div>
 
         </div>

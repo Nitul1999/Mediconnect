@@ -100,7 +100,7 @@ export const Appointmentform =()=>{
         symptoms:values.symptoms,
        };
        try {
-        const response = await axiosInstance.put(`/person/create-appointment/${userid}`,appointmentdata)
+        const response = await axiosInstance.put(`/person/create/appointment/${userid}`,appointmentdata)
         if(response.data.success){
             message.success(response.data.message)
         }else{

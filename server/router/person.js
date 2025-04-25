@@ -70,9 +70,9 @@ router.post('/login',async(req,res)=>{
     }
 })
 //create appointment
-router.put('/create-appointment/:id',async(req,res)=>{
+router.put('/create/appointment/:id',async(req,res)=>{
     try {
-        const userid = req.params
+        const userid = req.params.id
         
         const appointmentdata = req.body
         console.log(appointmentdata)
@@ -91,7 +91,9 @@ router.put('/create-appointment/:id',async(req,res)=>{
             return res.status(404).json({message:"User Not Found", success:false})
         }
        return res.status(200).json({message:"Appointment Created Successfully", success:true})
+
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message:"Server Error"})
     }
 })

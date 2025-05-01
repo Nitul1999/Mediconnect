@@ -29,7 +29,18 @@ const personschema = new mongoose.Schema({
         appointmenttime:{type:String,required:true},
         doctorname:{type:String,required:true},
         reason:{type:String},
-        symptoms:{type:String}
+        symptoms:{type:String},
+        appointmentcreatedate:{type:Date,default:Date.now},
+        results:[{
+          results:{type:String},
+          visitDate:{type:Date,default: Date.now},
+          condition:{type:String},
+          remarks:{type:String},
+          testrequired:{type:[String]}
+        }],
+        labreport:[{
+          
+        }]
       },
     ],
       //medical history//

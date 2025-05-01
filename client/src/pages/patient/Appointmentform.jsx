@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Button,message, Result,Alert } from 'antd';
+import { Form, Input, DatePicker, Select, Button,message, Result,Alert,Row,Col } from 'antd';
 import  axiosInstance  from '../../apicalls/index'
 import {Link} from 'react-router-dom'
 import { jwtDecode } from "jwt-decode";
@@ -124,8 +124,8 @@ export const Appointmentform =()=>{
     </>
    )
     return(
-        <div className="">
-            <div className="m2">
+        <div className=" flex justify-center">
+            <div className="m2 w-3">
                
                 <Form
                     form={form}
@@ -133,107 +133,131 @@ export const Appointmentform =()=>{
                     onFinish={onFinish}
                     layout="vertical"
                     >
-                    <Form.Item
-                        name="patientname"
-                        label="Patient Name"
-                        rules={[{ required: true, message: 'Please input the patient name!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="gender"
-                        label="Gender"
-                        rules={[{ required: true, message: 'Please select the gender!' }]}
-                    >
-                        <Select placeholder="Select a gender">
-                        <Option value="male">Male</Option>
-                        <Option value="female">Female</Option>
-                        <Option value="other">Other</Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        name="dateofbirth"
-                        label="DOB"
-                        rules={[{ required: true, message: 'Select Date of Birth ' }]}
+                    <Row >
+                        <Col >
+                            <Form.Item
+                            name="patientname"
+                            label="Patient Name"
+                            rules={[{ required: true, message: 'Please input the patient name!' }]}
                         >
-                            <DatePicker
-                            format="YYYY-MM-DD" // Set the format directly
-                            onChange={handleDOBChange} // Directly assign the onChange prop
-                            />
-                    </Form.Item>
+                            <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col>
+                            <Form.Item
+                                name="gender"
+                                label="Gender"
+                                rules={[{ required: true, message: 'Please select the gender!' }]}
+                            >
+                                <Select placeholder="Select a gender">
+                                <Option value="male">Male</Option>
+                                <Option value="female">Female</Option>
+                                <Option value="other">Other</Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={{ span: 7 }}>
+                            <Form.Item
+                                name="dateofbirth"
+                                label="DOB"
+                                rules={[{ required: true, message: 'Select Date of Birth ' }]}
+                                >
+                                    <DatePicker
+                                    format="YYYY-MM-DD" // Set the format directly
+                                    onChange={handleDOBChange} // Directly assign the onChange prop
+                                    />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 3 }}>
+                            <Form.Item
+                                name="age"
+                                label="Age"
+                            >
+                                <Input readOnly/>
 
-                    <Form.Item
-                        name="age"
-                        label="Age"
-                    >
-                        <Input readOnly/>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 7 }}>
+                            <Form.Item
+                                name="contact"
+                                label="Contact number"
+                                rules={[{ required: true, message: "Please enter your phone number" },{ pattern: /^[0-9]{10}$/, message: "Please enter a valid phone number" }]}
+                                >
+                                    <Input/>
 
-                    </Form.Item>
-                    
-                    <Form.Item
-                    name="contact"
-                    label="Contact number"
-                    rules={[{ required: true, message: "Please enter your phone number" },{ pattern: /^[0-9]{10}$/, message: "Please enter a valid phone number" }]}
-                    >
-                        <Input/>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                   
+                 
+                    <Row>
+                        <Col xs={{ span: 7 }}>
+                            <Form.Item
+                                name="doctorname"
+                                label="Doctor Name"
+                                rules={[{ required: true, message: 'Please select a doctor!' }]}
+                            >
+                                <Select placeholder="Select Doctor Name" onChange={handleDoctorChange}>
+                                    {doctor.map(doc => (
+                                        <Option key={doc._id} value={doc.name}>{doc.name}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col>
+                            <div className='p-left m1'>
+                                {selectDoc && 
+                                    <Alert
+                                    message="Specialization in :"
+                                    description={` ${selectDoc.specialization}`}
+                                    type="info"
+                                    showIcon
+                                    />
+                                }
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={{ span: 7 }}>
+                            <Form.Item
+                                name="appointmentdate"
+                                label="Appointment Date"
+                                rules={[{ required: true, message: 'Please select the appointment date!' }]}
+                            >
+                            
+                                <DatePicker onChange={handleDateChange}
+                                disabledDate={date => {
+                                    if (!selectDoc) return true;
+                                    const day = date.format('dddd').toLowerCase();
 
-                    </Form.Item>
-
-                    <Form.Item
-                        name="doctorname"
-                        label="Doctor Name"
-                        rules={[{ required: true, message: 'Please select a doctor!' }]}
-                    >
-                        <Select placeholder="Select Doctor Name" onChange={handleDoctorChange}>
-                            {doctor.map(doc => (
-                                <Option key={doc._id} value={doc.name}>{doc.name}</Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                    {selectDoc && 
-                        <Alert
-                        message="Specialization in :"
-                        description={` ${selectDoc.specialization}`}
-                        type="info"
-                        showIcon
-                        />
-                    }
-                    
-                    <Form.Item
-                        name="appointmentdate"
-                        label="Appointment Date"
-                        rules={[{ required: true, message: 'Please select the appointment date!' }]}
-                    >
-                    
-                        <DatePicker onChange={handleDateChange}
-                        disabledDate={date => {
-                            if (!selectDoc) return true;
-                            const day = date.format('dddd').toLowerCase();
-
-                            return !selectDoc.timetable.some(slot => slot.day.toLowerCase() === day);
-                            }}  />
-                    </Form.Item>
-                    
-                    <Form.Item
-                        name="appointmenttime"
-                        label="Appointment Time"
-                        rules={[{ required: true, message: 'Please select the appointment time!' }]}
-                    >
-                    {Array.isArray(time) && time.length > 0 ? (
-                        <Select placeholder="Select Appointment Time">
-                            {time.map((timeslot, index) => (
-                                <Option key={index} value={timeslot}>
-                                {timeslot}
-                                </Option>
-                            ))}
-                        </Select>
-                            ) : (
-                                <p style={{ color: 'red' }}>No Time Available</p>
-                            )}
-                                            
-                    </Form.Item>
-
+                                    return !selectDoc.timetable.some(slot => slot.day.toLowerCase() === day);
+                                    }}  />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 7 }}>
+                            <Form.Item
+                                name="appointmenttime"
+                                label="Appointment Time"
+                                rules={[{ required: true, message: 'Please select the appointment time!' }]}
+                            >
+                            {Array.isArray(time) && time.length > 0 ? (
+                                <Select placeholder="Select Appointment Time">
+                                    {time.map((timeslot, index) => (
+                                        <Option key={index} value={timeslot}>
+                                        {timeslot}
+                                        </Option>
+                                    ))}
+                                </Select>
+                                    ) : (
+                                        <p style={{ color: 'red' }}>No Time Available</p>
+                                    )}
+                                                    
+                            </Form.Item>
+                        </Col>
+                    </Row>
                     <Form.Item
                         name="reason"
                         label="Reason for Appointment"

@@ -7,6 +7,7 @@ import './stylesheet/textelement.css'
 import './stylesheet/list.css'
 import './stylesheet/them.css'
 import './stylesheet/otherdesign.css'
+import './stylesheet/profilecomp.css'
 import {Home } from './component/Home';
 import { Navbar } from './component/Navbar';
 import { Header } from './component/Header';

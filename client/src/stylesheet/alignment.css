@@ -10,7 +10,9 @@
 .w-2{
     width: 50vw;
 }
-
+.w-4{
+    width: 30vh;
+}
 .w-3{
     width: 40vw;
 }
@@ -78,4 +80,7 @@
 .p1-bottom{
     padding-bottom:10px;
     padding-right:10px;
+}
+.p-left{
+    padding-left: 10px;
 }

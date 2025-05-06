@@ -69,6 +69,27 @@ router.post('/login',async(req,res)=>{
         res.status(500).json(error)       
     }
 })
+router.get('/person/:id', async (req, res) => {
+
+    const { id:_id } = req.params;
+    console.log(_id)
+    if(!mongoose.Types.ObjectId.isValid(_id)){
+        return res.status(404).json({message:"No user found with that ID",success:false})
+    }
+    try {
+       
+        const data = await person.findById(_id);
+
+        if (!data) {
+            return res.status(404).json({ error: 'Person not found' });
+        }
+
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: error.message });
+    }
+});
 //create appointment
 router.put('/create/appointment/:id',async(req,res)=>{
     try {

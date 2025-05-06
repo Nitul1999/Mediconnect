@@ -8,7 +8,38 @@ const { Option } = Select;
 export const Appointmentform =()=>{
     
     const token = localStorage.getItem('token')
-    const decoded = jwtDecode(token);
+    // let decoded = jwtDecode(token);
+    if (!token || typeof token !== 'string') {
+        return (
+            <Result
+                status="warning"
+                title="To Create Appointment, Please Create an Account Or Login First..."
+                extra={
+                    <Button type="primary" key="console">
+                        <Link to="/signin">Login</Link>
+                    </Button>
+                }
+            />
+        );
+    }
+
+    let decoded;
+    try {
+        decoded = jwtDecode(token);
+    } catch (error) {
+        return (
+            <Result
+                status="error"
+                title="Invalid token. Please log in again."
+                extra={
+                    <Button type="primary">
+                        <Link to="/signin">Login</Link>
+                    </Button>
+                }
+            />
+        );
+    }
+
     const userid = decoded.userid
 
     const [doctor,setDoctor] = useState([]);
@@ -110,19 +141,19 @@ export const Appointmentform =()=>{
              message.error(error.response?.data?.message || "Something went wrong!");
        }
     };
-   if(!token) return(
-    <>
-        <Result
-            status="warning"
-            title="To Create Appointment, Please Create an Account Or Login First..."
-            extra={
-            <Button type="primary" key="console">
-                <Link to="/signin" className=''>Login</Link>
-            </Button>
-            }
-        />
-    </>
-   )
+//    if(!token  || typeof token !== 'string') return(
+//     <>
+//         <Result
+//             status="warning"
+//             title="To Create Appointment, Please Create an Account Or Login First..."
+//             extra={
+//             <Button type="primary" key="console">
+//                 <Link to="/signin" className=''>Login</Link>
+//             </Button>
+//             }
+//         />
+//     </>
+//    )
     return(
         <div className=" flex justify-center">
             <div className="m2 w-3">

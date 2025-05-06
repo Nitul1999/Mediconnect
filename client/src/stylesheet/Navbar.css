@@ -135,6 +135,7 @@
         z-index: 10;
         /* Ensure it appears above other elements */
     }
+   
 }
 
 @media (min-width: 1100px) {
@@ -142,4 +143,5 @@
         display: none;
         /* Hide toggle button on larger screens */
     }
+   
 }

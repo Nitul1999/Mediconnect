@@ -72,7 +72,6 @@ router.post('/login',async(req,res)=>{
 router.get('/person/:id', async (req, res) => {
 
     const { id:_id } = req.params;
-    console.log(_id)
     if(!mongoose.Types.ObjectId.isValid(_id)){
         return res.status(404).json({message:"No user found with that ID",success:false})
     }

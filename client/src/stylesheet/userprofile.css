@@ -1,0 +1,17 @@
+@media (max-width: 780px) {
+    .user-profile-sider {
+        display: none !important;
+      }
+      .toggle-sidebar-button {
+        display: block;
+      }
+
+}
+@media (min-width:780px) {
+    .user-profile-sider {
+        display: block !important;
+      }
+      .toggle-sidebar-button {
+        display: none;
+      }
+}

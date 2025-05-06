@@ -51,7 +51,7 @@ export const PatientProfile =()=>{
     };
 
     return (
-       <>
+<<<<<<< HEAD
         <Layout  style={{ minHeight: "100vh" }}>
             
                 <Sider
@@ -111,6 +111,59 @@ export const PatientProfile =()=>{
                 </Content>
             </Layout>
         </Layout>
-       </>
+=======
+        <Layout style={{ minHeight: "100vh" }}>
+      <Sider
+        width="20%"
+        style={{ background: "#fff", padding: 20, borderRight: "1px solid #f0f0f0" }}
+      >
+        {profileData && (
+          <Card
+            title="Profile"
+            extra={<Button danger onClick={handleLogout}>Logout</Button>}
+             variant="outlined"
+          >
+            <p><strong>Name:</strong> {profileData.name}</p>
+            <p><strong>Conatct No:</strong> {profileData.phone ? profileData.phone.toString() : 'N/A'}</p>
+            <p><strong>Email:</strong> {profileData.email ||'N/A'}</p>
+            <p><strong>DOB:</strong> {new Date(profileData.dateofbirth).toLocaleDateString()}</p>
+            <p><strong>Gender:</strong> {profileData.gender || 'N/A'}</p>
+            <p><strong>City:</strong> {profileData.city||'N/A'}</p>
+            <div>
+                <Button>View More</Button>
+                <Button>Update </Button>
+            </div>       
+          </Card>
+        )}
+      </Sider>
+
+      <Layout style={{ padding: "24px", background: "#f9f9f9" }}>
+        <Content>
+          {/* <Tabs
+            activeKey={activeTab}
+            onChange={handleTabChange}
+            items={[
+              {
+                label: "Book Doctor Appointment",
+                key: "1",
+                children: <BookDoctorAppointment />,
+              },
+              {
+                label: "View Previous Prescriptions",
+                key: "2",
+                children: <PreviousPrescriptions />,
+              },
+              {
+                label: "View Lab Reports",
+                key: "3",
+                children: <LabReportHistory shouldFetch={activeTab === "3"} />,
+              },
+            ]}
+          /> */}
+        </Content>
+      </Layout>
+    </Layout>
+>>>>>>> d73df6784abde1c9d5056b5ae57ee13afb0fa4f0
+      
     )
 }

@@ -59,7 +59,7 @@ export const PatientProfile =()=>{
             <p><strong>City:</strong> {profileData.city||'N/A'}</p>
             <div>
                 <Button>View More</Button>
-                <Button>Update</Button>
+                <Button>Update </Button>
             </div>       
           </Card>
         )}

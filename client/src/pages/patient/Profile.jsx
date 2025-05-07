@@ -51,7 +51,7 @@ export const PatientProfile =()=>{
             const userid = decodetoken.userid; 
             const data = await axiosInstance.get(`/person/view-all/appointment/${userid}`)
             console.log(data)
-            setAppointment(appointments)
+            setAppointment(data)
             
         } catch (error) {
             

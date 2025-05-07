@@ -129,7 +129,7 @@ router.get('/view-all/appointment/:id',async(req,res)=>{
         if(!data){
             return res.status(404).json({message:"User Not Found",success:false})
         }
-        res.status(200).json({appointments:data.appointments,success:true})
+        console.log(res.status(200).json({appointments:data.appointments, success:true}))
        } catch (error) {
         console.error("Error fetching appointments:", error);
         return res.status(500).json({ message: "Server error", success: false });

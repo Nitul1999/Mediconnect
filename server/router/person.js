@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const person = require('../model/person')
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Mongoose } = require("mongoose");
 const router = express.Router()
 
 //create register/account
@@ -69,6 +69,7 @@ router.post('/login',async(req,res)=>{
         res.status(500).json(error)       
     }
 })
+//fetch loggin user profile 
 router.get('/person/:id', async (req, res) => {
 
     const { id:_id } = req.params;
@@ -116,6 +117,23 @@ router.put('/create/appointment/:id',async(req,res)=>{
         console.log(error)
         return res.status(500).json({message:"Server Error"})
     }
+})
+//view appointments by user 
+router.get('/view-all/appointment/:id',async(req,res)=>{
+       const {id:_id} = req.params
+       if(!mongoose.Types.ObjectId.isValid(_id)){
+            return res.status(404).json({message:"No user found with that ID",success:false})
+       }
+       try {
+        const data = await person.findById(_id)
+        if(!data){
+            return res.status(404).json({message:"User Not Found",success:false})
+        }
+        res.status(200).json({appointments:data.appointments,success:true})
+       } catch (error) {
+        console.error("Error fetching appointments:", error);
+        return res.status(500).json({ message: "Server error", success: false });
+       }
 })
 
 module.exports = router;

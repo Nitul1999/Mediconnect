@@ -34,7 +34,7 @@ function App() {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log(decoded.role)
+        // console.log(decoded.role)
 
         return decoded.role; // Adjust this based on your token structure
       } catch (error) {
@@ -60,7 +60,7 @@ function App() {
         <Route path='/add-employee' element={< Addemployees/> }/>
         <Route path='/employees' element={<EmployeeList/>}/>
         <Route path='/doctors' element={<Doctores />}/>
-        < Route path='/patientprofile'element={< PatientProfile/>}/>
+        <Route path='/patientprofile' element={< PatientProfile/>}/>
         <Route path ='/make-appointment' element={< Appointmentform/>}/>
         
       </Routes>

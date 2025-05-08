@@ -301,7 +301,7 @@ export const Appointmentform =()=>{
                 </Form>
 
                 {/* <div>
-                            <h1>Booked</h1>
+                    <h1>Booked</h1>
                 </div> */}
             </div>
 

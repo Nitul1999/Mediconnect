@@ -99,7 +99,7 @@ export const PatientProfile =()=>{
                     <Button className="toggle-sidebar-button" onClick={toggleSidebar} style={{ marginBottom: '16px' }}>
                         {sidebarVisible ? 'Hide Sidebar' : 'Show Sidebar'}
                     </Button>
-                <Content style={{ padding: "24px", background: "#f9f9f9", flex: 2 }}>
+                <Content style={{ padding: "2px", background: "#f9f9f9", flex: 2 }}>
                     <Tabs
                         activeKey={activeTab}
                         onChange={handleTabChange}

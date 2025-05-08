@@ -3,6 +3,7 @@ import { Form, Input, DatePicker, Select, Button,message, Result,Alert,Row,Col }
 import  axiosInstance  from '../../apicalls/index'
 import {Link} from 'react-router-dom'
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 
 export const Appointmentform =()=>{
@@ -39,7 +40,6 @@ export const Appointmentform =()=>{
             />
         );
     }
-
     const userid = decoded.userid
 
     const [doctor,setDoctor] = useState([]);
@@ -51,6 +51,8 @@ export const Appointmentform =()=>{
     const [dates, setDates] = useState([]);
     const [availableDates, setAvailableDates] = useState([]);
     const [specialization, setSpecialization] = useState('');
+
+    const navigate= useNavigate()
 
     const [form] = Form.useForm();
     // fetching doctors details
@@ -134,6 +136,7 @@ export const Appointmentform =()=>{
         const response = await axiosInstance.put(`/person/create/appointment/${userid}`,appointmentdata)
         if(response.data.success){
             message.success(response.data.message)
+            navigate('/patientprofile')
         }else{
             message.error(response.data.message)
         }
@@ -141,19 +144,6 @@ export const Appointmentform =()=>{
              message.error(error.response?.data?.message || "Something went wrong!");
        }
     };
-//    if(!token  || typeof token !== 'string') return(
-//     <>
-//         <Result
-//             status="warning"
-//             title="To Create Appointment, Please Create an Account Or Login First..."
-//             extra={
-//             <Button type="primary" key="console">
-//                 <Link to="/signin" className=''>Login</Link>
-//             </Button>
-//             }
-//         />
-//     </>
-//    )
     return(
         <div className=" flex justify-center">
             <div className="m2 w-3">

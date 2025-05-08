@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"; 
-import { Layout, Menu,Spin, Card, Button, Typography, Tabs } from 'antd'; // Assuming you're using Ant Design for UI components
+import { Layout, Menu,Spin, Card, Button, Typography, Tabs, message } from 'antd'; // Assuming you're using Ant Design for UI components
 import  axiosInstance  from '../../apicalls/index'
 import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom";
@@ -13,24 +13,25 @@ export const PatientProfile =()=>{
 
     const navigate = useNavigate()
     const [profileData, setProfileData] = useState([]);
-    const[appointment,setAppointment] =useState(null)
+    const[appointment,setAppointment] =useState([])
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("1");
     const [sidebarVisible, setSidebarVisible] = useState(true);
 
+    const token = localStorage.getItem('token');
+    const decodetoken  = jwtDecode(token);
+    const userid = decodetoken.userid;
     useEffect(() => {
-        fetchProfile();
-        fetchappointments();
+        if(!token){
+            message.error('You are not logged in');
+        }
+       
+        fetchProfile(userid);
+        fetchappointments(userid);
       }, []);
       //profile fetching
-      const fetchProfile = async () => {
+      const fetchProfile = async (userid) => {
         try {
-          const token = localStorage.getItem('token');
-          if(!token){
-              message.error('You are not logged in');
-          }
-          const decodetoken  = jwtDecode(token);
-          const userid = decodetoken.userid; 
           
           const data  = await axiosInstance.get(`/person/person/${userid}`);
           setProfileData(data.data);
@@ -41,22 +42,16 @@ export const PatientProfile =()=>{
         }
       };
       //appointments fetching
-      const fetchappointments =async()=>{
+      const fetchappointments =React.useCallback(async(userid)=>{
         try {
-            const token = localStorage.getItem('token');
-            if(!token){
-                message.error('You are not logged in');
-            }
-            const decodetoken  = jwtDecode(token);
-            const userid = decodetoken.userid; 
             const data = await axiosInstance.get(`/person/view-all/appointment/${userid}`)
-            console.log(data)
-            setAppointment(data)
-            
+            if( data.data.success){
+                setAppointment(data.data.appointments)
+            }           
         } catch (error) {
             
         }
-      }
+      },[userid])
     
       const handleLogout=()=>{
         localStorage.removeItem('token') // remove the token 
@@ -112,7 +107,7 @@ export const PatientProfile =()=>{
                         {
                             label: "View Appointments",
                             key: "1",
-                            children: <ViewAppointments appointments={appointment} />,
+                            children: <ViewAppointments appointments={appointment} userid={userid} refresh={fetchappointments}  />,
                         },
                         {
                             label: "View Previous Prescriptions",

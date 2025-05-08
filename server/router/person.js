@@ -129,11 +129,35 @@ router.get('/view-all/appointment/:id',async(req,res)=>{
         if(!data){
             return res.status(404).json({message:"User Not Found",success:false})
         }
-        console.log(res.status(200).json({appointments:data.appointments, success:true}))
+        res.status(200).json({appointments:data.appointments, success:true,message:"All Appointments Found"})
        } catch (error) {
         console.error("Error fetching appointments:", error);
         return res.status(500).json({ message: "Server error", success: false });
        }
 })
 
+//delete a appointment
+router.patch('/appointmnet/:userid/delete/:appointmentid',async(req,res)=>{
+    const {userid,appointmentid} = req.params
+    if(!mongoose.Types.ObjectId.isValid(userid)){
+        return res.status(404).json({message:"User Not Foud found ",success:false})
+    }
+    if(!mongoose.Types.ObjectId.isValid(appointmentid)){
+        return res.status(404).json({message:"Appointment Not Found",success:false})
+    }
+    try {
+        const deleteappointment = await person.findByIdAndUpdate(
+            userid,{$pull:{appointments:{_id:appointmentid}}},
+            {new:true,runValidators:true}
+            )
+            if(!deleteappointment){
+                return res.status(404).json({message:"User Not Found",success:false})
+            }
+        return res.status(200).json({message:"Appointment Deleted Successfully",success:true})
+    } catch (error) {
+        
+    }
+        
+
+})
 module.exports = router;

@@ -199,15 +199,14 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
         }
     };
     const onFinish=async(values)=>{
-      console.log(values)
       try {
-        
+        const response = await axiosInstance.patch(`/appointment/${userid}/update-appointment-details/${record._id}`)
+        console.log(userid,record._id)
       } catch (error) {
         
       }
     }
 
-    
     const columns = [
         {
           title: 'Patient Name',
@@ -263,13 +262,13 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
         //   responsive: ['lg'],
         //   render: age => (age ?? 'N/A'),
         // },
-        {
-          title: 'Contact',
-          dataIndex: 'contact',
-          key: 'contact',
-          responsive: ['lg'],
-          render: contact => (contact ? contact.toString() : 'N/A'),
-        },
+        // {
+        //   title: 'Contact',
+        //   dataIndex: 'contact',
+        //   key: 'contact',
+        //   responsive: ['lg'],
+        //   render: contact => (contact ? contact.toString() : 'N/A'),
+        // },
         {
           title: 'Appointment Date',
           dataIndex: 'appointmentdate',
@@ -356,12 +355,10 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
           title: 'Report',
         }
       ];
-    
-    
+     
       if (!appointmentList || appointmentList.length === 0) {
       return <Empty description="No appointments found" style={{ padding: 24 }} />;
     }
-
 
     return(
         <>
@@ -494,7 +491,7 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
                     </Form.Item>
                  
                     <Row gutter={20}>
-                        <Col xs={{ span: 20 }}>
+                        <Col xs={{ span: 10 }}>
                             <Form.Item
                                 name="doctorname"
                                 label="Doctor Name"
@@ -511,10 +508,10 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
                             <div className='p-left m1'>
                                 {selectDoc && 
                                     <Alert
-                                    message="Specialization in :"
+                                    // message="Specialization in :"
                                     description={` ${selectDoc.specialization}`}
                                     type="info"
-                                    showIcon
+                                    // showIcon
                                     />
                                 }
                             </div>

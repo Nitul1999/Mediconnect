@@ -160,4 +160,27 @@ router.patch('/appointmnet/:userid/delete/:appointmentid',async(req,res)=>{
         
 
 })
+
+//update appointment details 
+router.patch('/appointment/:userid/update-appointment-details/:appointmentid',async(req,res)=>{
+
+    const {userid,appointmentid} = req.params
+    const data = req.body
+    if(!mongoose.Types.ObjectId.isValid(userid)){
+        return res.status(404).json({message:"Unable to find user",success:false})
+    }
+    if(!mongoose.Types.ObjectId.isValid(appointmentid)){
+        return res.status(404).json({message:"Appointment Not Found",success:false})
+    }
+    try {
+        
+    } catch (error) {
+        const updateappointment = await person.findByIdAndUpdate(
+            userid,{$set:{appointments:{$elemMatch:{_id:appointmentid,appointment:data.appointment}}}}, {new:true,runValidators:true}
+        
+        )
+    }
+    
+})
+
 module.exports = router;

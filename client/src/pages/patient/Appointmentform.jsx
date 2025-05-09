@@ -146,7 +146,7 @@ export const Appointmentform =()=>{
     };
     return(
         <div className=" flex justify-center">
-            <div className="m2 w-3">
+            <div className="m2">
                
                 <Form
                     form={form}
@@ -154,8 +154,8 @@ export const Appointmentform =()=>{
                     onFinish={onFinish}
                     layout="vertical"
                     >
-                    <Row >
-                        <Col >
+                    <Row gutter={20}>
+                        <Col xs={{span:14}} >
                             <Form.Item
                             name="patientname"
                             label="Patient Name"
@@ -164,7 +164,7 @@ export const Appointmentform =()=>{
                             <Input />
                             </Form.Item>
                         </Col>
-                        <Col>
+                        <Col xs={{span:10}} >
                             <Form.Item
                                 name="gender"
                                 label="Gender"
@@ -179,8 +179,8 @@ export const Appointmentform =()=>{
                         </Col>
                         
                     </Row>
-                    <Row gutter={16}>
-                        <Col xs={{ span: 7 }}>
+                    <Row gutter={20}>
+                        <Col xs={{ span: 6 }}>
                             <Form.Item
                                 name="dateofbirth"
                                 label="DOB"
@@ -192,7 +192,7 @@ export const Appointmentform =()=>{
                                     />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 3 }}>
+                        <Col xs={{ span: 4 }}>
                             <Form.Item
                                 name="age"
                                 label="Age"
@@ -201,7 +201,7 @@ export const Appointmentform =()=>{
 
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 7 }}>
+                        <Col xs={{ span: 14 }}>
                             <Form.Item
                                 name="contact"
                                 label="Contact number"
@@ -212,10 +212,9 @@ export const Appointmentform =()=>{
                             </Form.Item>
                         </Col>
                     </Row>
-                   
-                 
-                    <Row>
-                        <Col xs={{ span: 7 }}>
+
+                    <Row gutter={20}>
+                        <Col xs={{ span: 8 }}>
                             <Form.Item
                                 name="doctorname"
                                 label="Doctor Name"
@@ -228,21 +227,21 @@ export const Appointmentform =()=>{
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col>
-                            <div className='p-left m1'>
+                        <Col xs={{span:10}}>
+                            <div className='p-left'>
                                 {selectDoc && 
                                     <Alert
-                                    message="Specialization in :"
+                                    // message="Specialization in :"
                                     description={` ${selectDoc.specialization}`}
                                     type="info"
-                                    showIcon
+                                    // showIcon
                                     />
                                 }
                             </div>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col xs={{ span: 7 }}>
+                    <Row gutter={20}>
+                        <Col xs={{ span: 10 }}>
                             <Form.Item
                                 name="appointmentdate"
                                 label="Appointment Date"
@@ -258,7 +257,7 @@ export const Appointmentform =()=>{
                                     }}  />
                             </Form.Item>
                         </Col>
-                        <Col xs={{ span: 7 }}>
+                        <Col xs={{ span: 10 }}>
                             <Form.Item
                                 name="appointmenttime"
                                 label="Appointment Time"

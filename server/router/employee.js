@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const employee = require('../model/emp');
 const { default: mongoose } = require("mongoose");
+const emp = require("../model/emp");
 const router = express.Router()
 
 //employee login by email or phone or reg no ...working
@@ -52,6 +53,26 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ message: "Server error", error });
     }
 });
+//forget password
+router.post('/forget-password',async(req,res)=>{
+    console.log(req.body)
+    try {
+        const {email,password} = req.body
+        const empExist = await employee.findOne({email});
+
+         if (!empExist) {
+            return res.status(400).send({ message: "Email does not exist", success: false });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await employee.updateOne({email},{$set:{password:hashedPassword}})
+        res.send({message:"Password updated successfully",success:true})
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ message: "Internal Server Error", success: false });
+        
+    }
+})
 //get profile 
 router.get("/profile/view/:id", async (req, res) => {
     const {id:_id} = req.params

@@ -2,7 +2,7 @@ import React,{ useState,useEffect }from 'react';
 import  axiosInstance  from '../../apicalls/index'
 import { Table,Typography, Empty,Alert, Spin,Button,message,Modal,Card, Col, Row,Divider,Drawer,Form,Input,Select,DatePicker  } from "antd";
 const { Title } = Typography;
-import { PhoneOutlined,ReconciliationOutlined,SunOutlined,DownloadOutlined,UsergroupDeleteOutlined,CalendarOutlined,ClockCircleOutlined,QuestionOutlined,WarningOutlined,ForkOutlined,SmileOutlined,DeleteOutlined } from '@ant-design/icons'; 
+import { EditOutlined ,PhoneOutlined,ReconciliationOutlined,SunOutlined,DownloadOutlined,UsergroupDeleteOutlined,CalendarOutlined,ClockCircleOutlined,QuestionOutlined,WarningOutlined,ForkOutlined,SmileOutlined,DeleteOutlined } from '@ant-design/icons'; 
 // import jsPDF from "jspdf"; // Ensure jsPDF is imported
 
 
@@ -153,6 +153,7 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
         }
     }, [selectappointment, form]);
 
+    //Appointment form functions
     const handleDOBChange = (date) => {
       if (date) {
           const today = new Date();
@@ -181,7 +182,6 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
       setSelectedDate(null); // Reset selected date
       setSpecialization(selectedDoctor.specialization);
     };
-
     const handleDateChange = (date) => {
         setSelectedDate(date);
         if (selectDoc && date) {
@@ -198,6 +198,8 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
             setTime([]);
         }
     };
+
+    //update appointment function
     const onFinish=async(values)=>{
       try {
         const response = await axiosInstance.patch(`/appointment/${userid}/update-appointment-details/${record._id}`)
@@ -395,16 +397,17 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
                           // title={selectappointment.patientname} 
                             title={selectappointment.patientname ? `${selectappointment.patientname.toUpperCase()}'s Appointment Details` : "Loading..."}
                             variant="borderless">
-                            <Row >
-                                <Col span={12}>
-                                <Divider orientation="left" >Personal Details</Divider>
+                            <Row gutter={20} >
+                                <Col span={8}>
+                                <Divider >Personal Details</Divider>
                                   <div><PhoneOutlined /> - {selectappointment.contact}</div>
                                   <div><UsergroupDeleteOutlined /> - {selectappointment.gender}</div>
                                   <div><CalendarOutlined /> - {new Date(selectappointment.dob).toLocaleDateString()}</div>
                                   <div><SmileOutlined /> - {selectappointment.age}</div>
                                 </Col>
-                                <Col >
-                                <Divider orientation="right"orientationMargin={10}>Appointment Details</Divider>
+                                <Col span={16}>
+                                <Divider>Appointment Details</Divider>
+                                  <div><EditOutlined /> - {new Date(selectappointment.appointmentcreatedate).toDateString()}</div>
                                   <div><SunOutlined /> - {selectappointment.appointmentday}</div>
                                   <div><ReconciliationOutlined /> - {new Date(selectappointment.appointmentdate).toLocaleDateString()}</div>
                                   <div><ClockCircleOutlined /> - {selectappointment.appointmenttime}</div>
@@ -580,4 +583,5 @@ export const ViewAppointments =({appointments,userid,refresh})=>{
 
         </>
     )
+    
 }

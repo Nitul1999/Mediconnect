@@ -1,6 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const nodemailer = require('nodemailer');
 const person = require('../model/person')
 const { default: mongoose, Mongoose } = require("mongoose");
 const router = express.Router()
@@ -69,6 +71,72 @@ router.post('/login',async(req,res)=>{
         res.status(500).json(error)       
     }
 })
+
+//forgot password work
+//OTP requet
+router.post('/forgot-password/otp-request',async(req,res)=>{
+    try {
+        const {email} = req.body
+        const user = await person.findOne({email})
+        if(!user){
+            return res.status(400).send({message:"Account Not Found!! Please Create Account First.."})
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+        user.generateOTP=otp;
+        user.expiresInOTP =Date.now()+10*60*1000
+        await user.save()
+
+        //send the OTP to user Mail ID
+        const sendtouser = nodemailer.createTransport({
+            service:"gmail",
+            auth: {
+             
+                user: process.env.APP_EMAIL,
+                pass: process.env.APP_PASSWORD,
+                
+            },
+            tls: {
+                rejectUnauthorized: false,
+            }
+        })
+        await sendtouser.sendMail({
+            to:email,
+            from:  process.env.APP_EMAIL,
+            subject:"Password Reset OTP",
+            text: `Your OTP is ${otp} Please use this OTP to reset your password`,
+        })
+        res.json({message:"OTP Send your Registered Email ID",success:true})
+        } catch (error) {
+        console.error("Error in OTP request:", error);
+        res.status(500).send({ message: "Something went wrong while sending OTP", error: error.message });
+    }
+
+})
+//reset password using OTP
+router.post('/forgot-password/reset-password',async(req,res)=>{
+    try {
+        const {email,otp,password}=req.body
+        console.log(email)
+        const user = await person.findOne({email})
+        if(!user){
+            return res.status(400).send({message:"Account Not Found!! Please Create Account First.."})
+        }
+        if(user.generateOTP !== otp.toString().trim()  || Date.now()> user.expiresInOTP){
+            return res.status(400).send({message:"Invalid OTP!! Please try again with valid OTP.."})
+        }
+         const hashedPassword = await bcrypt.hash(password, 10);
+         user.password = hashedPassword;
+         user.generateOTP = null;
+         user.expiresInOTP = null;
+         await user.save();
+         
+         res.json({message:"Password Reset Successfully..",success:true})
+    } catch (error) {
+        console.error("Error in password reset:", error);
+        res.status(500).send({ message: "Something went wrong while resetting password", error:error.message });
+    }
+})
+
 //fetch loggin user profile 
 router.get('/person/:id', async (req, res) => {
 

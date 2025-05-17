@@ -15,6 +15,8 @@ const personschema = new mongoose.Schema({
     postalCode:{type:String },
     country:{type:String},
     emptype:{type:String,default:"patient"},
+    generateOTP:{type:String},
+    expiresInOTP:{type:Date},
       //appointment//
     appointments:
     [
@@ -38,6 +40,7 @@ const personschema = new mongoose.Schema({
           remarks:{type:String},
           testrequired:{type:[String]}
         }],
+        
         labreport:[{
           
         }]

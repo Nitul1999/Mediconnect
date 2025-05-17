@@ -12,3 +12,9 @@
     color: red ;
     transition: 1.1s;
 }
+.border-left-1{
+    border-left: 1px solid blue;
+}
+.mouse-pointer{
+    cursor: pointer;
+}

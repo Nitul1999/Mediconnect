@@ -18,3 +18,12 @@
 .mouse-pointer{
     cursor: pointer;
 }
+.hover-items{
+    transition: all 1.01s ease;
+}
+.hover-items:hover{
+    transform: scale(1.02); /* slightly enlarge */
+    box-shadow: 10px 14px 25px rgba(93, 106, 254, 0.2); /* add shadow */
+    border-color: rgba(178, 96, 255, 0.908);
+    
+}

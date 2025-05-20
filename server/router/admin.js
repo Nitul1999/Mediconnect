@@ -74,6 +74,7 @@ router.post('/forget-password',async(req,res)=>{
             return res.status(400).send({ message: "Email does not exist", success: false });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
+        
         await Admin.updateOne({email},{$set:{password:hashedPassword}})
         res.send({message:"Password updated successfully",success:true})
         

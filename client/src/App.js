@@ -24,6 +24,7 @@ import { Registration } from './pages/patient/Registration';
 import { Doctores } from './pages/common/Doctores';
 import { PatientProfile } from './pages/patient/Profile';
 import { Appointmentform } from './pages/patient/Appointmentform';
+import { Contactus } from './pages/common/Contactus';
 
 
 function App() {
@@ -52,11 +53,12 @@ function App() {
     <HeaderSecond/>
     <Navbar role={userRole} />
       <Routes>
-        <Route path='/' element={<Home />} />  
+        <Route path='/' element={<Home />} />
+        <Route path='/contact' element={<Contactus/>}/>  
         {/* <Route path ='/login' element={<LoginAddministration /> }/> */}
         <Route path='/profile' element={ <Profile />} />
         <Route path='/signin' element ={ <Login />}/>
-         <Route path ='/signup' element={<Registration />} />
+        <Route path ='/signup' element={<Registration />} />
         <Route path='/add-employee' element={< Addemployees/> }/>
         <Route path='/employees' element={<EmployeeList/>}/>
         <Route path='/doctors' element={<Doctores />}/>

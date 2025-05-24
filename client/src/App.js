@@ -25,6 +25,8 @@ import { Doctores } from './pages/common/Doctores';
 import { PatientProfile } from './pages/patient/Profile';
 import { Appointmentform } from './pages/patient/Appointmentform';
 import { Contactus } from './pages/common/Contactus';
+import { Message } from './pages/frontdesk/Message';
+
 
 
 function App() {
@@ -64,6 +66,7 @@ function App() {
         <Route path='/doctors' element={<Doctores />}/>
         <Route path='/patientprofile' element={< PatientProfile/>}/>
         <Route path ='/make-appointment' element={< Appointmentform/>}/>
+        <Route path ='/message' element={< Message/>}/>
         
       </Routes>
       <Footer />

@@ -13,12 +13,13 @@ const dbconfig = require('./config/dbconnection')
 const adminroutes = require('./router/admin');
 const employeeroutes = require('./router/employee')
 const personroutes = require('./router/person')
-
+const message = require('./router/message')
 
 //api end point start//
 app.use('/api/admin',adminroutes)
 app.use('/api/employee',employeeroutes)
 app.use('/api/person',personroutes)
+app.use('/api/contact-us/message',message)
 
 
 //running app 

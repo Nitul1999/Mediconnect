@@ -27,3 +27,37 @@
     border-color: rgba(178, 96, 255, 0.908);
     
 }
+
+/* for follow us section */
+.itmes-center-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.items-follow{
+  align-content: center;
+}
+.items-follow >p{
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1;
+    text-align: center;
+}
+.items-follow >ul{
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    font-size: 26px;
+    color: var(--primary);
+    justify-content: center;
+    align-items: center;
+}   
+.items-follow > ul >li{
+    transition: 0.1s all ease-in;
+    cursor: pointer;
+}
+.items-follow>ul>li:hover{
+    transform: scale(1.1) rotate(10deg);
+    filter: drop-shadow(3px 3px 10px rgba(156, 136, 253, 0.918));  
+}

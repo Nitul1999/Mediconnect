@@ -54,6 +54,7 @@ const navigate = useNavigate();
               <Select placeholder="Choose Employee type">
                 <Option value="doctor">Doctor</Option>
                 <Option value="labtech">Lab Technician</Option>
+                <Option value="frontdesk">Frontdesk</Option>
               </Select>
             </Form.Item>
             <Form.Item className="text-center">

@@ -36,8 +36,13 @@ export const Navbar = ({ role }) => {
         { title: "Dashboard", path: "/dashboard", icon: <i className="ri-dashboard-2-line"></i>, onClick: () => navigate('/dashboard') },
         { title: "Patients", path: "/patients", icon: <i className="ri-user-line"></i>, onClick: () => navigate('/patients') },
         { title: "Employees", path: "/employees", icon: <i className="ri-user-2-line"></i>, onClick: () => navigate('/employees') },
-        // { title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'),special: true },
     ];
+    const frontdesk = [
+        { title: "Home", path: "/", icon: <i className="ri-home-9-line"></i>, onClick: () => navigate('/') },
+        { title: "Doctors", path: "/doctors", icon: <i className="ri-user-2-line"></i>, onClick: () => navigate('/doctors') },
+        { title: "Patients", path: "/patients", icon: <i className="ri-user-line"></i>, onClick: () => navigate('/patients') },
+        {title:"Messages",path:'/message',icon:<i className='ri-message-line'></i>,onClick:()=>navigate('/message')}
+    ]
 
     const patientMenu = [
         { title: "Home", path: "/", icon: <i class="ri-home-9-line"></i>, onClick: () => navigate('/') },
@@ -48,7 +53,7 @@ export const Navbar = ({ role }) => {
     ];
 
     // Select the appropriate menu based on the role
-    const menu = role === 'admin' ? adminMenu  : (role === 'doctor' || role === 'labtech') ? employeeMenu : patientMenu;
+    const menu = role === 'admin' ? adminMenu  : (role === 'doctor' || role === 'labtech') ? employeeMenu : role==='frontdesk'? frontdesk : patientMenu;
       // Add Sign In option if not logged in
     if (!isLoggedIn) {
         menu.push({
@@ -63,7 +68,8 @@ export const Navbar = ({ role }) => {
                 adminMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'), special: true });
                 employeeMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'), special: true });
                 patientMenu.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/patientprofile'), special: true });
-        }    
+                frontdesk.push({ title: "Profile", path: "/profile", icon: <i className="ri-user-3-line"></i>, onClick: () => navigate('/profile'), special: true });
+            }    
     return (
         <div className="layout " >
             <div className="layout__header">

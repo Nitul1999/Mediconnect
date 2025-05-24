@@ -42,6 +42,7 @@ export const Login = () => {
     const onSubmitFailed=()=>{
     message.error('Invalid credentials')
     }
+    
     const sendOTP=async(values)=>{
         try {
             setEmail(values.email)
@@ -53,6 +54,7 @@ export const Login = () => {
                 message.error(error.response?.data?.message || "Failed to send OTP");
         }
     }
+
     const onSubmit=async(values)=>{
         console.log(email)
         try {
@@ -66,6 +68,7 @@ export const Login = () => {
             message.error(error.response?.data?.message || "OTP verification failed");
         }
     }
+
   return (
     <div>
         <div className="flex justify-center item-center">

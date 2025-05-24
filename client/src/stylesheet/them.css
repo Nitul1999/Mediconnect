@@ -24,3 +24,9 @@
 .btn-primary{
     background-color: var(--primary);
 }
+.bg-light{
+    background-color: var(--light);
+}
+.bg-info{
+    background-color: var(--info);
+}

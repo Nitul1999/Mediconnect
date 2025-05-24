@@ -97,10 +97,10 @@ export const Doctores = () => {
                 onChange={(e) => setSearchValue(e.target.value)}
               />
             </Col>
-            <Col xs={14} sm={8}>
+            <Col xs={16} sm={8}>
               <Select
                 placeholder="Filter by specialization"
-                style={{ width: '60%' }}
+                style={{ width: '100%' }}
                 allowClear
                 value={selectedSpecialization || undefined}
                 onChange={handleSpecializationChange}

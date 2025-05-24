@@ -21,7 +21,9 @@ const { Title, Text } = Typography;
       const endpoint ={
             admin:`/admin/profile/update/${data._id}`,
             doctor:`/employee/profile/update/${data._id}`,
-            labtech:`/employee/profile/update/${data._id}`
+            labtech:`/employee/profile/update/${data._id}`,
+            frontdesk:`/employee/profile/update/${data._id}`
+
       }
       const onFinish = async(values)=>{
         console.log(values)

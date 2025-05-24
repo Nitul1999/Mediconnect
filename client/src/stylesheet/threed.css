@@ -1,0 +1,11 @@
+.design-three-d{
+  width: 400px;
+  transform: perspective(1000px) rotateY(-40deg) scale(0.7);
+  box-shadow: 0px 0px 40px #8b7ff5;
+  transition: 0.5s ease all;
+  /* background: linear-gradient(180deg, #838281cb 30%, #f7e7dd); */
+  border-radius: 10%;
+}
+.design-three-d:hover {
+      transform: rotate(0deg) scale(1) translateY(10px);
+  }

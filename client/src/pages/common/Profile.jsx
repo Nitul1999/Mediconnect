@@ -25,7 +25,8 @@ export const Profile = () => {
                     const endpoint ={
                             admin:`/admin/profile/view/${userid}`,
                             doctor:`/employee/profile/view/${userid}`,
-                            labtech:`/employee/profile/view/${userid}`
+                            labtech:`/employee/profile/view/${userid}`,
+                            frontdesk:`/employee/profile/view/${userid}`
                     }
 
                      if (!endpoint[userRole]) {

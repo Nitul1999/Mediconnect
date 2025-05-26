@@ -33,8 +33,10 @@ export const Message = () => {
                     >
                         <div className="message-header">
                             <div className="name"> <UserOutlined /> - {msg.name}</div>
-                            <div className="email"> <MailOutlined /> - {msg.email}</div>
-                            <div className="contact"> <PhoneOutlined /> - {msg.contact}</div>
+                            <div className="flex justify-spacebtn m1">
+                                <div className="email"> <MailOutlined /> - {msg.email}</div>
+                                <div className="contact"> <PhoneOutlined /> - {msg.contact}</div>
+                            </div>                           
                         </div>
                         
                         <div className="message-text"> <MessageOutlined />  - 

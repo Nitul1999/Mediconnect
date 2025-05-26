@@ -15,7 +15,7 @@ router.post('/post-message',async(req,res)=>{
 
 router.get('/view/all/message',async(req,res)=>{
     try {
-        const message = await Messageschema.find().sort({ createdAt: 1 })
+        const message = await Messageschema.find().sort({ createdAt: -1 })
         if(message.length===0){
             return res.status(404).json({message:"No message Found!!",success:false})
         }

@@ -43,7 +43,7 @@ export const HeaderSecond = () => {
                       window.location.href ='/login'            
                   }
               } catch (error) {
-                  message.error(error.response?.data?.message || "Something went wrong!");
+                  message.error(error.response?.data?.message || "Please Select Your Correct Role");
               }
           
               

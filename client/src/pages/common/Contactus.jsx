@@ -71,7 +71,7 @@ export const Contactus = () => {
                         
                             <Form.Item
                                 label="Message"
-                                name="Massage">
+                                name="message">
                                 <Input.TextArea/>
                             </Form.Item>
                     

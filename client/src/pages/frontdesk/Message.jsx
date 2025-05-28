@@ -104,7 +104,7 @@ export const Message = () => {
                         current={currentPage}
                         pageSize={messagesPerPage}
                         total={totalMessages}
-                        onChange={handlePageChange}
+                        onChange={handlePageChange} 
                         showSizeChanger={false}
                         />
                     </div>

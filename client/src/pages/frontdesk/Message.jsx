@@ -14,7 +14,7 @@ export const Message = () => {
 
 
     const [currentPage, setCurrentPage] = useState(1);
-    const messagesPerPage = 5;
+    const messagesPerPage = 8;
 
     useEffect(()=>{
         getmessage()
@@ -32,7 +32,6 @@ export const Message = () => {
     const getmessage =async()=>{
         try {
             const response = await axiosInstance.get('/contact-us/message/view/all/message')
-            console.log(response.data.data)
             setMessages(response.data.data)
         } catch (error) {
             
@@ -54,18 +53,24 @@ export const Message = () => {
     const onSearch=(value)=>{
          setSearchText(value);
     }
+    
     return(
         <div className="message">
             <div className="container">
-                <h1 className="heading">Messages</h1>
-                <Search
-                    placeholder="Search by name"
-                    allowClear
-                    enterButton="Search"
-                    size="large"
-                    onSearch={onSearch}
-                    style={{ maxWidth: 400, marginBottom: 20 }}
-                />
+                <h1 className="heading ">User Messages & Inquiries</h1>
+                <p className="subheading text-center">
+                Below is a list of messages received from users through our contact form. You can search messages by name and browse through pages to review all communications.
+                </p>
+                <div className="flex justify-end m2">
+                    <Search
+                        placeholder="Search by name"
+                        allowClear
+                        enterButton="Search"
+                        size="large"
+                        onSearch={onSearch}
+                        style={{ maxWidth: 400, marginBottom: 20 }}
+                    />
+                </div>
                 <div className="message-list">
                     {currentMessages.map((msg, idx) => (
                     <div
@@ -97,7 +102,7 @@ export const Message = () => {
                     )}
                 </div>
                  {/* Pagination Controls */}
-                <div className="pagination">
+                <div className="pagination flex justify-center">
                  {totalMessages > messagesPerPage && (
                     <div className="pagination" style={{ textAlign: 'center', marginTop: 20 }}>
                         <Pagination

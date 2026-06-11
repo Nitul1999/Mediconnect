@@ -4,7 +4,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())  
-require('dotenv').config
+require('dotenv').config()
 
 
 const port = process.env.PORT || 1001
@@ -24,8 +24,9 @@ app.use('/api/contact-us/message',message)
 
 //running app 
 dbconfig.once('connected',()=>{
+    // console.log('connected to database....')
+    // app.listen(port,()=>{
+    //     console.log(`app is running on ${port}`)
+    // })
     console.log('connected to database....')
-    app.listen(port,()=>{
-        console.log(`app is running on ${port}`)
-    })
 })

@@ -42,3 +42,4 @@ dbconfig.once('connected',()=>{
     // })
     console.log('connected to database....')
 })
+module.exports = app;

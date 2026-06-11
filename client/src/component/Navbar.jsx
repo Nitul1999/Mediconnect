@@ -40,7 +40,7 @@ export const Navbar = ({ role }) => {
     const frontdesk = [
         { title: "Home", path: "/", icon: <i className="ri-home-9-line"></i>, onClick: () => navigate('/') },
         { title: "Doctors", path: "/doctors", icon: <i className="ri-user-2-line"></i>, onClick: () => navigate('/doctors') },
-        { title: "Patients", path: "/patients", icon: <i className="ri-user-line"></i>, onClick: () => navigate('/patients') },
+        { title: "Appointments", path: "/appointments", icon: <i class="ri-todo-line"></i>, onClick: () => navigate('/appointments')},
         {title:"Messages",path:'/message',icon:<i className='ri-message-line'></i>,onClick:()=>navigate('/message')}
     ]
 
@@ -81,7 +81,7 @@ export const Navbar = ({ role }) => {
                  </div>
                 <div className={`layout__header__menu ${menuActive ? 'active' : ''}`}>
                     <ul className='text-style' >
-                        {menu.map((item, index) => (
+                        {menu.map((item, index) => (  
                             <li key={index} onClick={item.onClick} className={item.special ? 'import' : ''}>
                                 {item.icon}
                                 <span>{item.title}</span>
@@ -89,6 +89,7 @@ export const Navbar = ({ role }) => {
                         ))}
                     </ul>
                 </div>
+                
             </div>
         </div>
     );

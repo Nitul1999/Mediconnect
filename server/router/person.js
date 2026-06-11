@@ -7,6 +7,19 @@ const person = require('../model/person')
 const { default: mongoose, Mongoose } = require("mongoose");
 const router = express.Router()
 
+//view All Appointments
+router.get('/viewallappointments', async (req, res) =>{
+    try {
+        const persons = await person.find({},'appointments')
+        const appointments = persons.flatMap(person => person.appointments); // Flatten the appointments array
+        res.json(appointments);
+    } catch (error) {
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
+
 //create register/account
 router.post('/register',async(req,res)=>{
     console.log(req.body)
@@ -250,5 +263,6 @@ router.patch('/appointment/:userid/update-appointment-details/:appointmentid',as
     }
     
 })
+
 
 module.exports = router;
